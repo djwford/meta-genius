@@ -1,0 +1,27 @@
+<div id="form_container">
+  <h2>Enter Module Info Here</h2>
+  <%= simple_form_for @metafile do |f| %>
+    <%= f.input :course_title, :label => "Course ID", :input_html => {:id => "courseTitle"} %>
+    <%= f.input :author, :input_html => {:id => "author"} %>
+    <%= f.input :module_number, :input_html => {:id => "moduleNumber", :min => "1"} %>
+  <%= f.input :title, :label => "Module Title" %>
+    <%= f.input :description, :as => :text, :input_html => {:rows => 20, :cols => 50} %>
+<!--     <div id="clips_container"> -->
+      <% iterator = 1 %>
+      <%= f.simple_fields_for :clips do |c| %>
+        <div class="clip_container">
+          <%= c.input :title, :label => "Clip #{iterator}", :input_html => {:class => "clip_title", :placeholder => "Clip Title"} %>
+          <%= c.input :href,  :as => :hidden, :input_html => {:class => "clip_href"} %>
+          <button class="remove_button">x</button>
+        </div>
+      <% iterator += 1 %>
+
+  <% end %>
+    <%= f.button :submit %>
+  <% end %>
+  <div id="add_clips_container">
+    <p>Add <input type="number" step="1" min="1" max="20" value="1" class="numeric integer" id="clips_count">clips</p>
+    <button id="add_clips">Add Clip(s)</button>
+    <button id="clear">Clear Fields</button>
+  </div>
+</div>

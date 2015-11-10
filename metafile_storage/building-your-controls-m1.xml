@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<module xmlns="http://pluralsight.com/sapphire/module/2007/11">
+  <author>nick-marx</author>
+  <title>Building Your Controls</title>
+  <description>This module will take you through the process of wiring together your buttons and joysticks</description>
+  <clips>
+    <clip href="building-a-raspberry-pi-arcade-m1-1.mp4" title="Overview"/>
+    <clip href="building-a-raspberry-pi-arcade-m1-2.mp4" title="Buttons"/>
+    <clip href="building-a-raspberry-pi-arcade-m1-3.mp4" title="Sticks"/>
+    <clip href="building-a-raspberry-pi-arcade-m1-4.mp4" title="Summary"/>
+  </clips>
+</module>

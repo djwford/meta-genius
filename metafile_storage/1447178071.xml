@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<root>
+  <module>
+    <author>as;dfasdf</author>
+    <title>asdfasdf</title>
+    <description>asdfasdf</description>
+    <clips>
+      <clip href="this-is-a-course-title-m2-1.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-2.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-3.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-4.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-5.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-6.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-7.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-8.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-9.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-10.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-11.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-12.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-13.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-14.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-15.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-16.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-17.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-18.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-19.mp4" title=""/>
+      <clip href="this-is-a-course-title-m2-20.mp4" title=""/>
+    </clips>
+  </module>
+</root>

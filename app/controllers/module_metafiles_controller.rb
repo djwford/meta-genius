@@ -44,6 +44,7 @@ class ModuleMetafilesController < ApplicationController
     # create the file
     courseTitle = metafile.title.gsub("\s","-").downcase
     fileName = "#{courseTitle}-m#{metafile.module_number}"
+    system 'mkdir', '-p', 'meta-genius/metafile_storage/'    
     puts "filename: #{fileName}"
     x = File.new("/home/nitrous/meta_genius/meta-genius/metafile_storage/#{fileName}.xml", "w")
     x.write builder.to_xml

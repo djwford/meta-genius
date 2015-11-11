@@ -6,7 +6,11 @@ function setHREF(){
   var moduleNumber = $("#moduleNumber").val();
   for(var i=0; i <= clips.length; i++){
     var target = $(clips[i]).find(".clip_href");
-    var href = (courseTitle + "-m" + moduleNumber + "-" + (i + 1) + ".mp4");
+    if((i + 1) < 10){
+      var clipNumber = ("0" + (i + 1))
+    }
+    else { clipNumber = (i + 1)}
+    var href = (courseTitle + "-m" + moduleNumber + "-" + clipNumber + ".mp4");
     $(target).val(href);
     console.log(href);
   }

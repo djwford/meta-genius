@@ -4,7 +4,7 @@
 
 #form_container {
   font-family: 'Open Sans Condensed', arial, sans;
-  width: 800px;
+  width: 900px;
   padding: 30px;
   background: #FFFFFF;
   margin: 50px auto;
@@ -44,11 +44,15 @@
   textarea{
     resize:none;
     overflow: hidden;
+    font-size: 18px;
+    padding:8px;
+    width:450px;
   }
   input {
     height:20px;
-    width:300px;
+    width:450px;
     padding:5px 8px;
+    font-size: 18px;
   }
   input[type="submit"]{
     -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
@@ -67,8 +71,8 @@
     height: 54px;
     width: 300px;
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 0px;
+    right: 0px;
   }
   input[type="button"]:hover, input[type="submit"]:hover{
     background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
@@ -87,7 +91,6 @@
     padding: 5px;
   }
 
-  textarea {padding:8px; width:300px;}
 
   .input{
     display: block;
@@ -113,7 +116,7 @@
     width: 35px;
   }
   #add_clips_container{
-    float: right;
+ float: right;
   }
 }
 

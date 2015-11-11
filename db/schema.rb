@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20151111195729) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "module_count"
+    t.text     "topics_list"
   end
 
   create_table "course_modules", force: :cascade do |t|

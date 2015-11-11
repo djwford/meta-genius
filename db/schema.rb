@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111191954) do
+ActiveRecord::Schema.define(version: 20151111195729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 20151111191954) do
     t.string   "author"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "module_count"
+  end
+
+  create_table "course_modules", force: :cascade do |t|
+    t.string   "author"
+    t.string   "name"
+    t.integer  "course_metafile_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "module_metafiles", force: :cascade do |t|
@@ -41,6 +50,13 @@ ActiveRecord::Schema.define(version: 20151111191954) do
     t.datetime "updated_at",    null: false
     t.string   "course_title"
     t.integer  "module_number"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.integer  "course_metafile_id"
+    t.text     "topics_list"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
 end

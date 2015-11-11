@@ -12,5 +12,4 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require metafiles.js
 //= require_tree .

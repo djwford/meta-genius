@@ -9,7 +9,7 @@
 /log/*
 !/log/.keep
 /tmp
-/metafile_storage
+/metafile_storage/*
 
 # Ignore application configuration
 /config/application.yml

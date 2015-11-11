@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151110002116) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "clips", force: :cascade do |t|
     t.string   "href"
     t.string   "title"

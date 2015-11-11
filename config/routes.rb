@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  root 'metafiles#new'
+  root 'welcome#home'
   resources :metafiles
 
   # Example of regular route:

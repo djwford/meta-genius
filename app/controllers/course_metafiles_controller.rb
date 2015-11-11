@@ -56,13 +56,14 @@ class CourseMetafilesController < ApplicationController
     # make the folder
   logger.debug "trying to make folder"
 
-    system 'mkdir', '-p', 'meta-genius/metafile_storage/'
-    x = File.new("/home/nitrous/meta_genius/meta-genius/metafile_storage/#{fileName}.meta", "w")
+    system 'mkdir', '-p', ENV['metafile_storage_path']
+  full_meta_path = "#{ENV['metafile_storage_path']"}#{fileName}.meta"
+  x = File.new(full_meta_path, "w")
     x.write builder.to_xml
     x.close
     rescue
   logger.debug "caught an error"
-    return "/home/nitrous/meta_genius/meta-genius/metafile_storage/#{fileName}.meta"
+    return full_meta_path
   end
 
   private

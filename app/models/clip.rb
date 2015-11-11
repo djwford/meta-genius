@@ -1,5 +1,5 @@
 class Clip < ActiveRecord::Base
-  belongs_to :metafile
+  belongs_to :module_metafile
 
 
 

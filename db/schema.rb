@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110002116) do
+ActiveRecord::Schema.define(version: 20151111191954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,12 +19,21 @@ ActiveRecord::Schema.define(version: 20151110002116) do
   create_table "clips", force: :cascade do |t|
     t.string   "href"
     t.string   "title"
-    t.integer  "metafile_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "module_metafile_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
-  create_table "metafiles", force: :cascade do |t|
+  create_table "course_metafiles", force: :cascade do |t|
+    t.string   "title"
+    t.text     "short_description"
+    t.text     "description"
+    t.string   "author"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "module_metafiles", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.string   "author"

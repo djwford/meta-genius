@@ -1,18 +1,18 @@
-class MetafilesController < ApplicationController
+class ModuleMetafilesController < ApplicationController
 
   def new
-    @metafile = Metafile.new
+    @metafile = ModuleMetafile.new
     20.times do |x|
       @metafile.clips.build
     end
   end
 
   def show
-    @metafile = Metafile.find(params[:id])
+    @metafile = ModuleMetafile.find(params[:id])
   end
 
   def create
-    @metafile = Metafile.new(metafile_params)
+    @metafile = ModuleMetafile.new(module_metafile_params)
     @metafile.author = @metafile.author.gsub(/\s/, "-").downcase
     if @metafile.save
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
@@ -53,8 +53,8 @@ class MetafilesController < ApplicationController
 
 
   private
-  def metafile_params
-    params.require(:metafile).permit(:title, :course_title, :author, :module_number, :description, clips_attributes: [:href, :title])
+  def module_metafile_params
+    params.require(:module_metafile).permit(:title, :course_title, :author, :module_number, :description, clips_attributes: [:href, :title])
   end
 end
 

@@ -34,7 +34,10 @@ $(document).ready(function(){
     // strip newlines from
     var currentDescription = $("#module_metafile_description").val();
     $("#module_metafile_description").val(currentDescription.replace(/\n/,""));
-
+     // strip newlines from descriptions
+      var currentDescription = $("#module_metafile_description").val();
+      $("#module_metafile_description").val((currentDescription).replace(/\n/g," "));
+    
 
   });
 
@@ -77,6 +80,7 @@ $(document).ready(function(){
   $(fields).click(function(){
     $(this).css({"background-color": "#FFFFFF"})
   });
+
 });
 
 

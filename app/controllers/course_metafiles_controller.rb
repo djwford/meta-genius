@@ -21,17 +21,17 @@ class CourseMetafilesController < ApplicationController
 
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
-        xml.title metafile.title.strip.gsub(/\s/, "-").downcase
+        xml.title metafile.title
         xml.shortDescription metafile.short_description
         xml.description metafile.description
         xml.modules {
           metafile.module_count.times do |x|
-            xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.title}-m#{(x + 1)}")
+            xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.title.gsub(/\s/, "-")}-m#{(x + 1)}")
           end
         }
         xml.topics{
           metafile.topics_list.split(",").each do |topic|
-            xml.topic topic
+            xml.topic topic.strip.downcase.gsub(/\s/,"-")
           end
         }
         xml.tags{

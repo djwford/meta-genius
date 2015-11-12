@@ -12,11 +12,11 @@ $(document).ready(function(){
         break;
       }
     }
-    // strip newlines from
+    // strip newlines from descriptions
     var descriptions = $("#course_metafile_description, #course_metafile_short_description")
     for(var i=0; i <= descriptions.length; i++){
       var currentDescription = $(descriptions[i]).val();
-      $(descriptions[i]).val((currentDescription).replace(/\n/,""));
+      $(descriptions[i]).val((currentDescription).replace(/\n/g," "));
     }
   });
 

@@ -56,8 +56,8 @@ class CourseMetafilesController < ApplicationController
     # make the folder
   logger.debug "trying to make folder"
 
-    system 'mkdir', '-p', ENV['metafile_storage_path']
-  full_meta_path = "#{ENV['metafile_storage_path'] + fileName}.meta"
+    system 'mkdir', '-p', ENV['METAFILE_PATH']
+  full_meta_path = "#{ENV['METAFILE_PATH'] + fileName}.meta"
   x = File.new(full_meta_path, "w")
     x.write builder.to_xml
     x.close

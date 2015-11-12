@@ -42,9 +42,9 @@ class ModuleMetafilesController < ApplicationController
       }
     end
     # create the file
-    courseTitle = metafile.title.strip.gsub("\s","-").downcase
+    courseTitle = metafile.course_id.strip.gsub("\s","-").downcase
     fileName = "#{courseTitle}-m#{metafile.module_number}"
-    system 'mkdir', '-p', 'meta-genius/metafile_storage/'    
+    system 'mkdir', '-p', 'meta-genius/metafile_storage/'
     puts "filename: #{fileName}"
     x = File.new("/home/nitrous/meta_genius/meta-genius/metafile_storage/#{fileName}.xml", "w")
     x.write builder.to_xml
@@ -55,7 +55,7 @@ class ModuleMetafilesController < ApplicationController
 
   private
   def module_metafile_params
-    params.require(:module_metafile).permit(:title, :course_title, :author, :module_number, :description, clips_attributes: [:href, :title])
+    params.require(:module_metafile).permit(:title, :course_title, :author, :module_number, :description, :course_id, clips_attributes: [:href, :title])
   end
 end
 

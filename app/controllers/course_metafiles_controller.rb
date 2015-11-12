@@ -26,7 +26,7 @@ class CourseMetafilesController < ApplicationController
         xml.description metafile.description
         xml.modules {
           metafile.module_count.times do |x|
-            xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.title.gsub(/\s/, "-")}-m#{(x + 1)}")
+            xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.course_id.strip}-m#{(x + 1)}")
           end
         }
         xml.topics{
@@ -52,7 +52,7 @@ class CourseMetafilesController < ApplicationController
       }
     end
     # create the file
-  fileName = "#{metafile.title.strip.gsub(/\s/,"-").downcase}.meta"
+  fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
     puts "filename: #{fileName}"
     # make the folder
   logger.debug "trying to make folder"
@@ -74,6 +74,7 @@ class CourseMetafilesController < ApplicationController
                                             :description,
                                             :author,
                                             :module_count,
+                                            :course_id,
                                             :topics_list)
 
   end

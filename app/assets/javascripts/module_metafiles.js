@@ -1,7 +1,7 @@
 
 function setHREF(){
   var clips = $('.clip_container');
-  var courseTitle = $("#courseTitle").val().trim();
+  var courseTitle = $("#courseID").val().trim();
   courseTitle = courseTitle.replace(/\s/g,"-").toLowerCase()
   var moduleNumber = $("#moduleNumber").val();
   for(var i=0; i <= clips.length; i++){
@@ -18,7 +18,7 @@ function setHREF(){
 
 $(document).ready(function(){
   $(".clip_container").hide();
-  var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description");
+  var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description", "#courseID");
 
   // perform basic validations before submission
   $("input:submit").click(function(){
@@ -37,7 +37,7 @@ $(document).ready(function(){
      // strip newlines from descriptions
       var currentDescription = $("#module_metafile_description").val();
       $("#module_metafile_description").val((currentDescription).replace(/\n/g," "));
-    
+
 
   });
 
@@ -75,7 +75,7 @@ $(document).ready(function(){
 
   $("#clear").click(function(){
     event.preventDefault();
-    $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description, .clip_title").val("");
+    $("#courseTitle, #moduleNumber, #courseID, #author, #metafile_title, #metafile_description, .clip_title").val("");
   });
   $(fields).click(function(){
     $(this).css({"background-color": "#FFFFFF"})

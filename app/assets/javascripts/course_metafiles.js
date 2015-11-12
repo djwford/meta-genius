@@ -1,3 +1,27 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+
+$(document).ready(function(){
+  // perform basic validations before submission
+  var fields = $("#courseTitle, #author, #course_metafile_short_description, #course_metafile_description, #moduleCount");
+  $("input:submit").click(function(){
+    // checks for presence
+    for(var i=0; i <= fields.length; i++){
+      if($(fields[i]).val() == ""){
+        event.preventDefault();
+        $(fields[i]).css({'background-color': '#FFAC65'});
+        alert("Please complete the highlighted items.");
+        break;
+      }
+    }
+    // strip newlines from
+    var descriptions = $("#course_metafile_description, #course_metafile_short_description")
+    for(var i=0; i <= descriptions.length; i++){
+      var currentDescription = $(descriptions[i]).val();
+      $(descriptions[i]).val((currentDescription).replace(/\n/,""));
+    }
+  });
+
+  // clear validations error formatting when any field is clicked
+  $(fields).click(function(){
+    $(this).css({"background-color": "#FFFFFF"})
+  });
+});

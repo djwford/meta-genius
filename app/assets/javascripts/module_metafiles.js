@@ -18,11 +18,11 @@ function setHREF(){
 
 $(document).ready(function(){
   $(".clip_container").hide();
+  var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description");
 
   // perform basic validations before submission
   $("input:submit").click(function(){
     // checks for presence
-    var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description");
     for(var i=0; i <= fields.length; i++){
       if($(fields[i]).val() == ""){
         event.preventDefault();
@@ -32,11 +32,9 @@ $(document).ready(function(){
       }
     }
     // strip newlines from
-    var descriptions = $("#course_metafile_description, #course_metafile_short_description, #module_metafile_description")
-    for(var i=0; i <= descriptions.length; i++){
-      var currentDescription = $(descriptions[i]).val();
-      $(descriptions[i]).val((currentDescription).replace(/\n/,""));
-    }
+    var currentDescription = $("#module_metafile_description").val();
+    $("#module_metafile_description").val(currentDescription.replace(/\n/,""));
+
 
   });
 
@@ -76,7 +74,9 @@ $(document).ready(function(){
     event.preventDefault();
     $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description, .clip_title").val("");
   });
-
+  $(fields).click(function(){
+    $(this).css({"background-color": "#FFFFFF"})
+  });
 });
 
 

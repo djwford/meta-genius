@@ -21,7 +21,7 @@ $(document).ready(function(){
 
   // perform basic validations before submission
   $("input:submit").click(function(){
-
+    // checks for presence
     var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description");
     for(var i=0; i <= fields.length; i++){
       if($(fields[i]).val() == ""){
@@ -31,6 +31,13 @@ $(document).ready(function(){
         break;
       }
     }
+    // strip newlines from
+    var descriptions = $("#course_metafile_description, #course_metafile_short_description, #module_metafile_description")
+    for(var i=0; i <= descriptions.length; i++){
+      var currentDescription = $(descriptions[i]).val();
+      $(descriptions[i]).val((currentDescription).replace(/\n/,""));
+    }
+
   });
 
   // add clips button

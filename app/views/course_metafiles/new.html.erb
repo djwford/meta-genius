@@ -5,7 +5,7 @@
     <%= f.input :author, :input_html => {:id => "author"} %>
     <%= f.input :short_description, :as => :text, :input_html => {:rows => 20, :cols => 20} %>
     <%= f.input :description, :as => :text, :input_html => {:rows => 20, :cols => 50} %>
-    <%= f.input :module_count, :input_html => {:id => "moduleCount", :min => "1"} %>
+  <%= f.input :module_count, :input_html => {:id => "moduleCount", :min => "1", :value => "1"} %>
   <%= f.input :topics_list, :as => :text, :input_html => {:placeholder => "A comma-separated list of topics"} %>
     <%= f.button :submit %>
 

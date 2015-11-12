@@ -13,7 +13,7 @@ class ModuleMetafilesController < ApplicationController
 
   def create
     @metafile = ModuleMetafile.new(module_metafile_params)
-    @metafile.author = @metafile.author.gsub(/\s/, "-").downcase
+    @metafile.author = @metafile.author.strip.gsub(/\s/, "-").downcase
     if @metafile.save
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
       response.headers['Content-Disposition'] = 'attachment; filename=metafile.xml'
@@ -31,8 +31,8 @@ class ModuleMetafilesController < ApplicationController
     end
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.module('xmlns' => "http://pluralsight.com/sapphire/module/2007/11") {
-        xml.author metafile.author
-        xml.title metafile.title
+        xml.author metafile.author.strip.gsub(/\s/, "-").downcase
+        xml.title metafile.title.strip
         xml.description metafile.description
         xml.clips {
           completeClips.each do | clipObject |
@@ -42,7 +42,7 @@ class ModuleMetafilesController < ApplicationController
       }
     end
     # create the file
-    courseTitle = metafile.title.gsub("\s","-").downcase
+    courseTitle = metafile.title.strip.gsub("\s","-").downcase
     fileName = "#{courseTitle}-m#{metafile.module_number}"
     system 'mkdir', '-p', 'meta-genius/metafile_storage/'    
     puts "filename: #{fileName}"

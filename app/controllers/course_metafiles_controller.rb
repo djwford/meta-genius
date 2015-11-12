@@ -11,6 +11,7 @@ class CourseMetafilesController < ApplicationController
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
       response.headers['Content-Disposition'] = "attachment; filename=#{@metafile.title}.meta"
       metaPath = create_xml @metafile
+      puts "response from create_xml", metaPath
       send_file metaPath
     end
   end
@@ -20,7 +21,7 @@ class CourseMetafilesController < ApplicationController
 
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
-        xml.title metafile.title.gsub(/\s/, "-").downcase
+        xml.title metafile.title.strip.gsub(/\s/, "-").downcase
         xml.shortDescription metafile.short_description
         xml.description metafile.description
         xml.modules {
@@ -51,18 +52,18 @@ class CourseMetafilesController < ApplicationController
       }
     end
     # create the file
-    fileName = "#{metafile.title}.meta"
+  fileName = "#{metafile.title.strip.gsub(/\s/,"-").downcase}.meta"
     puts "filename: #{fileName}"
     # make the folder
   logger.debug "trying to make folder"
 
     system 'mkdir', '-p', ENV['METAFILE_PATH']
-  full_meta_path = "#{ENV['METAFILE_PATH'] + fileName}.meta"
+  full_meta_path = (ENV['METAFILE_PATH'] + fileName)
+  puts "full_meta_path: ", full_meta_path
   x = File.new(full_meta_path, "w")
     x.write builder.to_xml
     x.close
-    rescue
-  logger.debug "caught an error"
+
     return full_meta_path
   end
 

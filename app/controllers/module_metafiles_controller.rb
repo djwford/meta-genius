@@ -19,6 +19,9 @@ class ModuleMetafilesController < ApplicationController
       response.headers['Content-Disposition'] = 'attachment; filename=metafile.xml'
       metaPath = create_xml @metafile
       send_file metaPath
+      flash[:notice] = "Meta successfully created."
+      
+
     end
   end
 

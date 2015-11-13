@@ -4,7 +4,7 @@
     <%= f.input :title, :label => "Course Title", :input_html => {:id => "courseTitle"} %>
   <%= f.input :course_id, :label => "Course ID", :input_html => {:id => "courseID", :placeholder => "sample-course-id"} %>
     <%= f.input :author, :input_html => {:id => "author"} %>
-    <%= f.input :short_description, :as => :text, :input_html => {:rows => 20, :cols => 20} %>
+    <%= f.input :short_description, :as => :text, :input_html => {:rows => 11, :cols => 20} %>
     <%= f.input :description, :as => :text, :input_html => {:rows => 20, :cols => 50} %>
   <%= f.input :module_count, :input_html => {:id => "moduleCount", :min => "1", :value => "1"} %>
   <%= f.input :topics_list, :as => :text, :input_html => {:placeholder => "A comma-separated list of topics"} %>
@@ -12,3 +12,4 @@
 
   <% end %>
 </div>
+<%= link_to "Go Back", '/', {:id => "back_button"} %>

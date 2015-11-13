@@ -17,7 +17,7 @@ function setHREF(){
 }
 
 $(document).ready(function(){
-  $(".clip_container").hide();
+//   $(".clip_container").hide();
   var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description", "#courseID");
 
   // perform basic validations before submission
@@ -31,7 +31,7 @@ $(document).ready(function(){
         break;
       }
     }
-    // strip newlines from
+    // strip newlines from description
     var currentDescription = $("#module_metafile_description").val();
     $("#module_metafile_description").val(currentDescription.replace(/\n/,""));
      // strip newlines from descriptions
@@ -42,27 +42,27 @@ $(document).ready(function(){
   });
 
   // add clips button
-  $("#add_clips").click(function(){
-    var clips_count = parseInt($("#clips_count").val());
-    var hidden_clips = $(".clip_container").filter(":hidden");
+//   $("#add_clips").click(function(){
+//     var clips_count = parseInt($("#clips_count").val());
+//     var hidden_clips = $(".clip_container").filter(":hidden");
 
-    //if there are enough clips available, unhide
-    if(hidden_clips.length >= clips_count)
-    {
-      for(i=0; i < clips_count; i++)
-      {
-        $(hidden_clips[i]).show();
-      }
-    }
-  });
+//     //if there are enough clips available, unhide
+//     if(hidden_clips.length >= clips_count)
+//     {
+//       for(i=0; i < clips_count; i++)
+//       {
+//         $(hidden_clips[i]).show();
+//       }
+//     }
+//   });
 
   // remove clips button
-  $(".remove_button").click(function(){
-    event.preventDefault();
-    var clipContainer = $(this).closest(".clip_container");
-    $(clipContainer).hide();
-    $(clipContainer).find(".clip_title").val("");
-  });
+//   $(".remove_button").click(function(){
+//     event.preventDefault();
+//     var clipContainer = $(this).closest(".clip_container");
+//     $(clipContainer).hide();
+//     $(clipContainer).find(".clip_title").val("");
+//   });
 
 
   // when the course title is changed, set all HREF inputs
@@ -80,7 +80,6 @@ $(document).ready(function(){
   $(fields).click(function(){
     $(this).css({"background-color": "#FFFFFF"})
   });
-
 });
 
 

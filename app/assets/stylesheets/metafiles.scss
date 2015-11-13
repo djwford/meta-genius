@@ -1,7 +1,11 @@
 // Place all the styles related to the metafiles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body{
+  font-size: 16px;
+  font-family: 'Open Sans Condensed', sans-serif;
 
+}
 #form_container {
   font-family: 'Open Sans Condensed', arial, sans;
   width: 900px;
@@ -17,9 +21,9 @@
     background: #4D4D4D;
     text-transform: uppercase;
     font-family: 'Open Sans Condensed', sans-serif;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 100;
+    color: #FFB75D;
+    font-size: 25px;
+    font-weight: 200;
     padding: 20px;
     margin: -30px -30px 30px -30px;
     text-align: center;
@@ -37,22 +41,18 @@
     border-bottom: 1px solid #ddd;
     background: transparent;
     margin-bottom: 10px;
-    font: 16px Arial, Helvetica, sans-serif;
-    height: 45px;
   }
 
   textarea{
     resize:none;
     overflow: hidden;
-    font-size: 18px;
     padding:8px;
     width:450px;
   }
   input {
-    height:20px;
     width:450px;
     padding:5px 8px;
-    font-size: 18px;
+    margin-bottom: 5px;
   }
   input[type="submit"]{
     -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
@@ -63,16 +63,16 @@
     display: inline-block;
     cursor: pointer;
     color: #FFFFFF;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 25px;
+    font-size: 19px;
     padding: 8px 18px;
     text-decoration: none;
     text-transform: uppercase;
-    height: 54px;
+    height: 45px;
     width: 300px;
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
+    position: relative;
+    left: 31%;
+    margin-top: 14px;
+    text-align: center;
   }
   input[type="button"]:hover, input[type="submit"]:hover{
     background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
@@ -87,6 +87,7 @@
     display:block;
     float:left;
     font-size: 18px;
+    font-weight: 300;
     text-align: right;
     padding: 5px;
   }
@@ -98,11 +99,11 @@
     width: 90%;
     margin-left:5%;
   }
-  .clip_container
+/*   .clip_container
   {
     float: left;
     margin-left: 5%;
-  }
+  } */
   .remove_button{
     width: 40px;
     background-color:#0f0f00;
@@ -115,11 +116,33 @@
   #clips_count{
     width: 35px;
   }
-  #add_clips_container{
- float: right;
+  #clips_title{
+    float: left;
+    width: 800px;
+    text-align: center;
   }
 }
 
+#back_button{
 
+    font-size: 25px;
+    padding: 8px 18px;
+  text-align: center;
+  height: 54px;
+    width: 5%;
+    min-width: 100px;
+    background-color: #FFA75D;
+    color: #FFFFFF;
+
+      text-decoration: none !important;
+
+  position: fixed;
+  top:0;
+  left:0;
+  &:hover{
+    background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+    background-color:#34CACA;
+}
+}
 
 

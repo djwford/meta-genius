@@ -26,7 +26,7 @@ class CourseMetafilesController < ApplicationController
         xml.description metafile.description
         xml.modules {
           metafile.module_count.times do |x|
-            xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.course_id.strip}-m#{(x + 1)}")
+            xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.course_id.strip.gsub(/\s/, "-").downcase}-m#{(x + 1)}")
           end
         }
         xml.topics{

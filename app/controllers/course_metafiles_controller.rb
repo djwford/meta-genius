@@ -9,7 +9,7 @@ class CourseMetafilesController < ApplicationController
 
     if @metafile.save
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
-      response.headers['Content-Disposition'] = "attachment; filename=#{@metafile.title}.meta"
+      response.headers['Content-Disposition'] = "attachment; filename=metafile.xml"
       metaPath = create_xml @metafile
       send_file metaPath
     end
@@ -57,7 +57,7 @@ class CourseMetafilesController < ApplicationController
   logger.debug "trying to make folder"
 
     system 'mkdir', '-p', ENV['METAFILE_PATH']
-  full_meta_path = (ENV['METAFILE_PATH'] + fileName)
+  full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)
   puts "full_meta_path: ", full_meta_path
   x = File.new(full_meta_path, "w")
     x.write builder.to_xml

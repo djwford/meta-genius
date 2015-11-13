@@ -1,10 +1,12 @@
 class ModuleMetafilesController < ApplicationController
 
   def new
+    puts "new module meta"
     @metafile = ModuleMetafile.new
     20.times do |x|
       @metafile.clips.build
     end
+    puts "new module created successfully"
   end
 
   def show

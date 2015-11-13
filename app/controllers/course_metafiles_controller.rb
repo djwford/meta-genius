@@ -11,7 +11,6 @@ class CourseMetafilesController < ApplicationController
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
       response.headers['Content-Disposition'] = "attachment; filename=#{@metafile.title}.meta"
       metaPath = create_xml @metafile
-      puts "response from create_xml", metaPath
       send_file metaPath
     end
   end

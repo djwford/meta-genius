@@ -19,9 +19,6 @@ class ModuleMetafilesController < ApplicationController
       response.headers['Content-Disposition'] = 'attachment; filename=metafile.xml'
       metaPath = create_xml @metafile
       send_file metaPath
-      flash[:notice] = "Meta successfully created."
-      
-
     end
   end
 
@@ -47,12 +44,12 @@ class ModuleMetafilesController < ApplicationController
     # create the file
     courseTitle = metafile.course_id.strip.gsub("\s","-").downcase
     fileName = "#{courseTitle}-m#{metafile.module_number}"
-    system 'mkdir', '-p', 'meta-genius/metafile_storage/'
+    system 'mkdir', '-p', ENV['METAFILE_PATH']
     puts "filename: #{fileName}"
-    x = File.new("/home/nitrous/meta_genius/meta-genius/metafile_storage/#{fileName}.xml", "w")
+    x = File.new("#{ENV["METAFILE_PATH"]}/#{fileName}.xml", "w")
     x.write builder.to_xml
     x.close
-    return "metafile_storage/#{fileName}.xml"
+    return "#{ENV["METAFILE_PATH"]}/#{fileName}.xml"
   end
 
 

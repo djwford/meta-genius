@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
   // perform basic validations before submission
-  var fields = $("#courseTitle, #author, #course_metafile_short_description, #course_metafile_description, #moduleCount", "#courseID");
+  var fields = $("#courseTitle, #author, #course_metafile_short_description, #course_metafile_description, #moduleCount, #courseID");
   $("input:submit").click(function(){
     // checks for presence
     for(var i=0; i <= fields.length; i++){

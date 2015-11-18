@@ -6,63 +6,68 @@ class CourseMetafilesController < ApplicationController
 
   def create
     @metafile = CourseMetafile.new(course_metafile_params)
-
     if @metafile.save
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
       response.headers['Content-Disposition'] = "attachment; filename=metafile.xml"
       metaPath = create_xml @metafile
       send_file metaPath
+      logger.tagged("metafile_create") { logger.info "Created course metafile. Params: #{course_metafile_params}" }
+    else
+      logger.tagged("fatal") { logger.info "Failed to create Course metafile. Params: #{course_metafile_params}" }
     end
   end
 
 
   def create_xml(metafile)
-
-    builder = Nokogiri::XML::Builder.new do |xml|
-      xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
-        xml.title metafile.title
-        xml.shortDescription metafile.short_description
-        xml.description metafile.description
-        xml.modules {
-          metafile.module_count.times do |x|
-            xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.course_id.strip.gsub(/\s/, "-").downcase}-m#{(x + 1)}")
-          end
+    begin
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
+          xml.title metafile.title
+          xml.shortDescription metafile.short_description
+          xml.description metafile.description
+          xml.modules {
+            metafile.module_count.times do |x|
+              xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.course_id.strip.gsub(/\s/, "-").downcase}-m#{(x + 1)}")
+            end
+          }
+          xml.topics{
+            metafile.topics_list.split(",").each do |topic|
+              xml.topic topic.strip.downcase.gsub(/\s/,"-")
+            end
+          }
+          xml.tags{
+            xml.tag "foo"
+          }
+          xml.audienceTags{
+            xml.audienceTag "foo"
+          }
+          xml.toolsTags{
+            xml.toolsTag "foo"
+          }
+          xml.topicTags{
+            xml.topicTag "foo"
+          }
+          xml.certificationsTags{
+            xml.certificationsTag "foo"
+          }
         }
-        xml.topics{
-          metafile.topics_list.split(",").each do |topic|
-            xml.topic topic.strip.downcase.gsub(/\s/,"-")
-          end
-        }
-        xml.tags{
-          xml.tag "foo"
-        }
-        xml.audienceTags{
-          xml.audienceTag "foo"
-        }
-        xml.toolsTags{
-          xml.toolsTag "foo"
-        }
-        xml.topicTags{
-          xml.topicTag "foo"
-        }
-        xml.certificationsTags{
-          xml.certificationsTag "foo"
-        }
-      }
+      end
+    rescue => error
+    logger.tagged("fatal") { logger.debug "Failed to create_xml four course meta. Params: #{metafile}. Error: #{error.inspect}" }
     end
     # create the file
   fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
-    puts "filename: #{fileName}"
-    # make the folder
-  logger.debug "trying to make folder"
-
-    system 'mkdir', '-p', ENV['METAFILE_PATH']
+  # make the folder
+  system 'mkdir', '-p', ENV['METAFILE_PATH']
   full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)
-  puts "full_meta_path: ", full_meta_path
-  x = File.new(full_meta_path, "w")
+  begin
+    x = File.new(full_meta_path, "w")
     x.write builder.to_xml
     x.close
-
+    logger.tagged("course_metafile_saved") {logger.info "Metafile saved. Full path: #{full_meta_path}"}
+  rescue => error
+    logger.tagged("fatal") {logger.info "Failed to save course metafile. Full path: #{full_meta_path}. Metafile: #{metafile}. Error: #{error.inspect}"}
+  end
     return full_meta_path
   end
 

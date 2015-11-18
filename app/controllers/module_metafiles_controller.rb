@@ -1,12 +1,14 @@
 class ModuleMetafilesController < ApplicationController
 
   def new
-    puts "new module meta"
-    @metafile = ModuleMetafile.new
-    20.times do |x|
-      @metafile.clips.build
+    begin
+      @metafile = ModuleMetafile.new
+      20.times do |x|
+        @metafile.clips.build
+      end
+    rescue => error
+      logger.tagged("fatal") {logger.debug "failed on ModuleMetafilesController::new. Error: #{error.inspect}"}
     end
-    puts "new module created successfully"
   end
 
   def show
@@ -20,38 +22,54 @@ class ModuleMetafilesController < ApplicationController
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
       response.headers['Content-Disposition'] = 'attachment; filename=metafile.xml'
       metaPath = create_xml @metafile
-      send_file metaPath
+      begin
+        send_file metaPath
+        logger.tagged("module_metafile_created") {logger.info "Created module meta. Params: #{module_metafile_params}"}
+      rescue => error
+          logger.tagged("fatal") {logger.debug "failed on ModuleMetafilesController::create. Error: #{error.inspect}"}
+      end
+    else
+      logger.tagged("fatal") {logger.debug "failed to save on ModuleMetafilesController::create. Error: #{error.inspect}"}
+      return render html: "#{ENV["ERROR_MESSAGE"]}"
     end
   end
 
   def create_xml(metafile)
-    completeClips = []
-    metafile.clips.each do |clip|
-      if(clip.title.length > 0)
-        completeClips.push clip
+    begin
+      completeClips = []
+      metafile.clips.each do |clip|
+        if(clip.title.length > 0)
+          completeClips.push clip
+        end
       end
-    end
-    builder = Nokogiri::XML::Builder.new do |xml|
-      xml.module('xmlns' => "http://pluralsight.com/sapphire/module/2007/11") {
-        xml.author metafile.author.strip.gsub(/\s/, "-").downcase
-        xml.title metafile.title.strip
-        xml.description metafile.description
-        xml.clips {
-          completeClips.each do | clipObject |
-            xml.clip(:href => clipObject.href, :title => clipObject.title)
-          end
-          }
-      }
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml.module('xmlns' => "http://pluralsight.com/sapphire/module/2007/11") {
+          xml.author metafile.author.strip.gsub(/\s/, "-").downcase
+          xml.title metafile.title.strip
+          xml.description metafile.description
+          xml.clips {
+            completeClips.each do | clipObject |
+              xml.clip(:href => clipObject.href, :title => clipObject.title)
+            end
+            }
+        }
+      end
+    rescue => error
+      logger.tagged("fatal") {logger.debug "Failed while creating XML. Metafile: #{metafile}. Error: #{error.inspect}"}
     end
     # create the file
-    courseTitle = metafile.course_id.strip.gsub("\s","-").downcase
-    fileName = "#{courseTitle}-m#{metafile.module_number}"
-    system 'mkdir', '-p', ENV['METAFILE_PATH']
-    puts "filename: #{fileName}"
-    x = File.new("#{ENV["METAFILE_PATH"]}/#{fileName}.xml", "w")
-    x.write builder.to_xml
-    x.close
-    return "#{ENV["METAFILE_PATH"]}/#{fileName}.xml"
+    begin
+      courseTitle = metafile.course_id.strip.gsub("\s","-").downcase
+      fileName = "#{courseTitle}-m#{metafile.module_number}"
+      system 'mkdir', '-p', ENV['METAFILE_PATH']
+      puts "filename: #{fileName}"
+      x = File.new("#{ENV["METAFILE_PATH"]}/#{fileName}.xml", "w")
+      x.write builder.to_xml
+      x.close
+      return "#{ENV["METAFILE_PATH"]}/#{fileName}.xml"
+    rescue => error
+        logger.tagged("fatal") {logger.debug "failed while saving XML.  Metafile: #{metafile}. Error: #{error.inspect}"}
+    end
   end
 
 
@@ -61,14 +79,4 @@ class ModuleMetafilesController < ApplicationController
   end
 end
 
-
-
-# <module xmlns="http://pluralsight.com/sapphire/module/2007/11">
-#   <author>daryl-moorhouse</author>
-#   <title>Introduction and Project Overview</title>
-#   <description>Introduction and Project Overview</description>
-#   <clips>
-#     <clip href="getting-started-2297-m1-1-hq.mp4" title="Introduction and Project Overview" />
-#   </clips>
-# </module>
 

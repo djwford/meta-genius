@@ -15,11 +15,10 @@ function setHREF(){
     console.log(href);
   }
 }
+var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description, #courseID");
 
 $(document).ready(function(){
 //   $(".clip_container").hide();
-  var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description", "#courseID");
-
   // perform basic validations before submission
   $("input:submit").click(function(){
     // checks for presence

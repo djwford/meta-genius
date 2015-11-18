@@ -11,9 +11,9 @@ class CourseMetafilesController < ApplicationController
       response.headers['Content-Disposition'] = "attachment; filename=metafile.xml"
       metaPath = create_xml @metafile
       send_file metaPath
-      logger.tagged("metafile_create") { logger.info "Created course metafile. Params: #{course_metafile_params}" }
     else
-      logger.tagged("fatal") { logger.info "Failed to create Course metafile. Params: #{course_metafile_params}" }
+      logger.tagged("course_metafile_fatal") { logger.info "Failed to create Course metafile. Params: #{course_metafile_params}" }
+      return render html: "#{ENV["ERROR_MESSAGE"]}"
     end
   end
 
@@ -53,7 +53,7 @@ class CourseMetafilesController < ApplicationController
         }
       end
     rescue => error
-    logger.tagged("fatal") { logger.debug "Failed to create_xml four course meta. Params: #{metafile}. Error: #{error.inspect}" }
+    logger.tagged("course_metafile_fatal") { logger.debug "Failed to create_xml four course meta. Params: #{metafile}. Error: #{error.inspect}" }
     end
     # create the file
   fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
@@ -64,9 +64,9 @@ class CourseMetafilesController < ApplicationController
     x = File.new(full_meta_path, "w")
     x.write builder.to_xml
     x.close
-    logger.tagged("course_metafile_saved") {logger.info "Metafile saved. Full path: #{full_meta_path}"}
+    logger.tagged("course_metafile_success") {logger.info "Metafile saved. Full path: #{full_meta_path}"}
   rescue => error
-    logger.tagged("fatal") {logger.info "Failed to save course metafile. Full path: #{full_meta_path}. Metafile: #{metafile}. Error: #{error.inspect}"}
+    logger.tagged("course_metafile_fatal") {logger.info "Failed to save course metafile. Full path: #{full_meta_path}. Metafile: #{metafile}. Error: #{error.inspect}"}
   end
     return full_meta_path
   end

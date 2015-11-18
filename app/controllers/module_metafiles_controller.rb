@@ -7,7 +7,7 @@ class ModuleMetafilesController < ApplicationController
         @metafile.clips.build
       end
     rescue => error
-      logger.tagged("fatal") {logger.debug "failed on ModuleMetafilesController::new. Error: #{error.inspect}"}
+      logger.tagged("module_metafile_fatal") {logger.debug "failed on ModuleMetafilesController::new. Error: #{error.inspect}"}
     end
   end
 
@@ -24,12 +24,12 @@ class ModuleMetafilesController < ApplicationController
       metaPath = create_xml @metafile
       begin
         send_file metaPath
-        logger.tagged("module_metafile_created") {logger.info "Created module meta. Params: #{module_metafile_params}"}
+        logger.tagged("module_metafile_success") {logger.info "Created module meta. Params: #{module_metafile_params}"}
       rescue => error
-          logger.tagged("fatal") {logger.debug "failed on ModuleMetafilesController::create. Error: #{error.inspect}"}
+        logger.tagged("module_metafile_fatal") {logger.debug "failed on ModuleMetafilesController::create. Error: #{error.inspect}"}
       end
     else
-      logger.tagged("fatal") {logger.debug "failed to save on ModuleMetafilesController::create. Error: #{error.inspect}"}
+      logger.tagged("module_metafile_fatal") {logger.debug "failed to save on ModuleMetafilesController::create. Error: #{error.inspect}"}
       return render html: "#{ENV["ERROR_MESSAGE"]}"
     end
   end
@@ -55,7 +55,7 @@ class ModuleMetafilesController < ApplicationController
         }
       end
     rescue => error
-      logger.tagged("fatal") {logger.debug "Failed while creating XML. Metafile: #{metafile}. Error: #{error.inspect}"}
+      logger.tagged("module_metafile_fatal") {logger.debug "Failed while creating XML. Metafile: #{metafile}. Error: #{error.inspect}"}
     end
     # create the file
     begin
@@ -68,7 +68,7 @@ class ModuleMetafilesController < ApplicationController
       x.close
       return "#{ENV["METAFILE_PATH"]}/#{fileName}.xml"
     rescue => error
-        logger.tagged("fatal") {logger.debug "failed while saving XML.  Metafile: #{metafile}. Error: #{error.inspect}"}
+logger.tagged("module_metafile_fatal") {logger.debug "failed while saving XML.  Metafile: #{metafile}. Error: #{error.inspect}"}
     end
   end
 

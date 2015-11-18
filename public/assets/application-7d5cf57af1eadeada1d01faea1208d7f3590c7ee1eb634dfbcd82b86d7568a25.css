@@ -1,0 +1,200 @@
+/* line 4, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+body {
+  font-size: 16px;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+/* line 9, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container {
+  font-family: 'Open Sans Condensed', arial, sans;
+  /*   width: 900px; */
+  width: 40%;
+  min-width: 550px;
+  max-width: 950px;
+  padding: 30px;
+  background: #FFFFFF;
+  margin: 50px auto;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+  overflow: auto;
+  /*   .clip_container
+    {
+      float: left;
+      margin-left: 5%;
+    } */
+}
+/* line 24, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container h2 {
+  background: #4D4D4D;
+  text-transform: uppercase;
+  font-family: 'Open Sans Condensed', sans-serif;
+  color: #FFB75D;
+  font-size: 25px;
+  font-weight: 200;
+  padding: 20px;
+  margin: -30px -30px 30px -30px;
+  text-align: center;
+}
+/* line 36, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container select {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  display: block;
+  width: 100%;
+  padding: 7px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  background: transparent;
+  margin-bottom: 10px;
+}
+/* line 50, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container textarea {
+  resize: none;
+  overflow: hidden;
+  padding: 8px;
+  /*     width:450px; */
+  width: 60%;
+  min-width: 250px;
+}
+/* line 58, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container input {
+  /*     width:450px; */
+  padding: 5px 8px;
+  width: 60%;
+  min-width: 230px;
+  margin-bottom: 5px;
+}
+/* line 65, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container input[type="submit"] {
+  -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+  box-shadow: inset 0px 1px 0px 0px #45D6D6;
+  background-color: #2CBBBB;
+  border: 1px solid #27A0A0;
+  display: inline-block;
+  cursor: pointer;
+  color: #FFFFFF;
+  font-size: 19px;
+  padding: 8px 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+  height: 45px;
+  width: 300px;
+  position: relative;
+  left: 31%;
+  margin-top: 14px;
+  text-align: center;
+}
+/* line 85, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container input[type="button"]:hover, #form_container input[type="submit"]:hover {
+  background: linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+  background-color: #34CACA;
+}
+/* line 89, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container input[type="text"]:focus {
+  background-color: #FFFFFF;
+}
+/* line 92, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container label {
+  width: 150px;
+  margin-top: 5p;
+  display: block;
+  float: left;
+  font-size: 18px;
+  font-weight: 300;
+  text-align: right;
+  padding: 5px;
+}
+/* line 104, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container .input {
+  display: block;
+  float: left;
+  width: 90%;
+  margin-left: 5%;
+}
+/* line 115, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container .remove_button {
+  width: 40px;
+  background-color: #0f0f00;
+  color: #ffffff;
+  border: none;
+  display: inline;
+  float: left;
+  margin-left: 5%;
+}
+/* line 124, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container #clips_count {
+  width: 35px;
+}
+/* line 127, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#form_container #clips_title {
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+
+/* line 134, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#back_button {
+  font-size: 25px;
+  padding: 8px 18px;
+  text-align: center;
+  height: 54px;
+  width: 5%;
+  min-width: 100px;
+  background-color: #FFA75D;
+  color: #FFFFFF;
+  text-decoration: none !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+/* line 150, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/metafiles.scss */
+#back_button:hover {
+  background: linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+  background-color: #34CACA;
+}
+/* line 4, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/welcome.scss */
+body {
+  font-family: 'Open Sans Condensed', arial, sans;
+}
+
+/* line 9, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/welcome.scss */
+h1 {
+  margin-top: 15%;
+  text-align: center;
+  color: #9DBDC6;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 50px;
+}
+
+/* line 18, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/welcome.scss */
+a {
+  color: #FFA75D;
+  font-size: 30px;
+}
+
+/* line 22, /home/nitrous/meta_genius/meta-genius/app/assets/stylesheets/welcome.scss */
+p {
+  text-align: center;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+

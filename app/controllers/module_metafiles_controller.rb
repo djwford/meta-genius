@@ -66,7 +66,7 @@ class ModuleMetafilesController < ApplicationController
       x = File.new("#{ENV["METAFILE_PATH"]}/#{fileName}.xml", "w")
       x.write builder.to_xml
       x.close
-      return "#{ENV["METAFILE_PATH"]}/#{fileName}.xml"
+    return "#{ENV["METAFILE_PATH"]}/#{fileName}.meta"
     rescue => error
 logger.tagged("module_metafile_fatal") {logger.debug "failed while saving XML.  Metafile: #{metafile}. Error: #{error.inspect}"}
     end

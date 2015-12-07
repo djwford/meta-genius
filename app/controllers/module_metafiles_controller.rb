@@ -63,7 +63,7 @@ class ModuleMetafilesController < ApplicationController
       fileName = "#{courseTitle}-m#{metafile.module_number}"
       system 'mkdir', '-p', ENV['METAFILE_PATH']
       puts "filename: #{fileName}"
-      x = File.new("#{ENV["METAFILE_PATH"]}/#{fileName}.xml", "w")
+      x = File.new("#{ENV["METAFILE_PATH"]}/#{fileName}.meta", "w")
       x.write builder.to_xml
       x.close
     return "#{ENV["METAFILE_PATH"]}/#{fileName}.meta"

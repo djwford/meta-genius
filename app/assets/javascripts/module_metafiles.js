@@ -1,4 +1,3 @@
-
 function setHREF(){
   var clips = $('.clip_container');
   var courseTitle = $("#courseID").val().trim();
@@ -15,11 +14,10 @@ function setHREF(){
     console.log(href);
   }
 }
-var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description, #courseID");
 
 $(document).ready(function(){
-//   $(".clip_container").hide();
   // perform basic validations before submission
+  var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description, #courseID");
   $("input:submit").click(function(){
     // checks for presence
     for(var i=0; i <= fields.length; i++){
@@ -33,37 +31,10 @@ $(document).ready(function(){
     // strip newlines from description
     var currentDescription = $("#module_metafile_description").val();
     $("#module_metafile_description").val(currentDescription.replace(/\n/,""));
-     // strip newlines from descriptions
-      var currentDescription = $("#module_metafile_description").val();
-      $("#module_metafile_description").val((currentDescription).replace(/\n/g," "));
-
-
+    // strip newlines from descriptions
+    var currentDescription = $("#module_metafile_description").val();
+    $("#module_metafile_description").val((currentDescription).replace(/\n/g," "));
   });
-
-  // add clips button
-//   $("#add_clips").click(function(){
-//     var clips_count = parseInt($("#clips_count").val());
-//     var hidden_clips = $(".clip_container").filter(":hidden");
-
-//     //if there are enough clips available, unhide
-//     if(hidden_clips.length >= clips_count)
-//     {
-//       for(i=0; i < clips_count; i++)
-//       {
-//         $(hidden_clips[i]).show();
-//       }
-//     }
-//   });
-
-  // remove clips button
-//   $(".remove_button").click(function(){
-//     event.preventDefault();
-//     var clipContainer = $(this).closest(".clip_container");
-//     $(clipContainer).hide();
-//     $(clipContainer).find(".clip_title").val("");
-//   });
-
-
   // when the course title is changed, set all HREF inputs
   $("#courseTitle").blur(function(){
     setHREF();

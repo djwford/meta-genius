@@ -20,7 +20,7 @@ class ModuleMetafilesController < ApplicationController
     @metafile.author = @metafile.author.strip.gsub(/\s/, "-").downcase
     if @metafile.save
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
-      response.headers['Content-Disposition'] = 'attachment; filename=metafile.xml'
+      response.headers['Content-Disposition'] = 'attachment; filename=metafile.meta'
       metaPath = create_xml @metafile
       begin
         send_file metaPath

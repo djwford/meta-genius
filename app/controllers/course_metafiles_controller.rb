@@ -35,23 +35,36 @@ class CourseMetafilesController < ApplicationController
               xml.topic topic.strip.downcase.gsub(/\s/,"-")
             end
           }
-          xml.tags{
-            xml.tag "foo"
+        # audience tags
+        if(metafile.audience_tags)
+          xml.audienceTags{
+            xml.audienceTag metafile.audience_tags
           }
+        else
           xml.audienceTags{
             xml.audienceTag "foo"
           }
+        end
+        # tools tags
+        if(metafile.tools_tags)
+          xml.toolsTags{
+            metafile.tools_tags.split(",").each do |tool|
+              xml.toolsTag tool.strip.downcase.gsub(/\s/,"-")
+            end
+          }
+        else
           xml.toolsTags{
             xml.toolsTag "foo"
-          }
-          xml.topicTags{
-            xml.topicTag "foo"
-          }
+            }
+        end
+          # cert tags
+        if(metafile.certification_tags)
           xml.certificationsTags{
-            xml.certificationsTag "foo"
+            xml.certificationsTag metafile.certification_tags
           }
-        }
-      end
+        end
+      }
+    end
     rescue => error
     logger.tagged("course_metafile_fatal") { logger.debug "Failed to create_xml four course meta. Params: #{metafile}. Error: #{error.inspect}" }
     end
@@ -79,7 +92,11 @@ class CourseMetafilesController < ApplicationController
                                             :author,
                                             :module_count,
                                             :course_id,
-                                            :topics_list)
+                                            :topics_list,
+                                            :tools_tags,
+                                            :audience_tags,
+                                            :topics_tags,
+                                            :certification_tags)
 
   end
 end

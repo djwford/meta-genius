@@ -1,15 +1,85 @@
+<!-- <div data-ot="The content" data-ot-delay="2" data-ot-hide-trigger="closeButton">Hover me</div> -->
+
 <div id="form_container">
   <h2>Enter Course Info Here</h2>
   <%= simple_form_for @metafile do |f| %>
-    <%= f.input :title, :label => "Course Title", :input_html => {:id => "courseTitle"} %>
-  <%= f.input :course_id, :label => "Course ID", :input_html => {:id => "courseID", :placeholder => "sample-course-id"} %>
+    <%= f.input :title,
+                :label => "Course Title",
+                :input_html => {:id => "courseTitle"} %>
+    <%= f.input :course_id,
+                :label => "Course ID",
+                :input_html => {:id => "courseID",
+                :placeholder => "sample-course-id"} %>
     <%= f.input :author, :input_html => {:id => "author"} %>
-    <%= f.input :short_description, :as => :text, :input_html => {:rows => 11, :cols => 20} %>
-    <%= f.input :description, :as => :text, :input_html => {:rows => 20, :cols => 50} %>
-  <%= f.input :module_count, :input_html => {:id => "moduleCount", :min => "1", :value => "1"} %>
-  <%= f.input :topics_list, :as => :text, :input_html => {:placeholder => "A comma-separated list of topics"} %>
+    <%= f.input :short_description,
+                :as => :text,
+                :input_html => {:rows => 11, :cols => 20} %>
+    <%= f.input :description, :as => :text,
+                :input_html => {:rows => 20, :cols => 50} %>
+    <%= f.input :module_count,
+:input_html => {:id => "moduleCount", :min => "1", :value => "1"},
+                :data => {
+                  :ot => "NOT including the course preview."
+                  } %>
+    <%= f.input :topics_list, :label => "Topics",
+                :as => :text,
+                :input_html => {:placeholder => "A comma-separated list of topics",
+                :rows => 3, :cols => 20,
+                :data => {
+                  :ot=> " Topics tags complete the sentence,
+                      'This course is about ______.' Include
+                      one or a handful of topics. For example,
+                       a course about configuring VMware
+                       vSphere 6 should include topic tags
+                       for vmware-vsphere and virtualization.
+                      Try to be as specific and comprehensive as
+                      possible when tagging this course."
+                }} %>
+    <%= f.input :audience_tags,
+                :label => "Audience Tag",
+                :collection => ['software-development',
+                                'it-ops',
+                                'data-professional',
+                                'business-professional',
+                                'creative-professional',
+                                'architecture-construction',
+                                'manufacturing-design'],
+                :placeholder => "Choose One",
+                :input_html => {:rows => 1, :cols => 20, :data =>
+                  {
+                    :ot => "This tag answers the question, 'Who is this course designed for?'
+                            Pick the tag that best describes the course's target audience."
+                  }}%>
+    <%= f.input :topics_tags,
+                :label => "Search Keywords",
+                :as => "text",
+                :placeholder => "A comma-separated list of search terms",
+                :input_html => {:rows => 5, :cols => 20, :data =>
+                  {
+                    :ot => "Fix me"
+                  }
+                } %>
+    <%= f.input :tools_tags, :as => :text,
+                :input_html => {:rows => 5, :cols => 20,
+                :placeholder => "A comma-separated list of tools",
+                :data => {
+                  :ot => "
+                    Tools tags identify the tools and technology used in the course.
+                    Use as many of these as necessary to be comprehensive.
+                    Please use generic tool tags (examples: windows-server, photoshop,
+                     visual-studio) as well as the specific version used in the course
+                    (examples: windows-server-2012, windows-server-2012-r2,
+                      photoshop-cc-2015, visual-studio-2015)."
+                }} %>
+    <%= f.input :certification_tags,
+                :as => :text,
+                :placeholder => "A comma-separated list of certification details",
+                :input_html => {:rows => 5, :cols => 20, :data => {
+                  :ot => "
+                    If the course prepares the viewer for a certification exam, please use the tags for:
+                    exam number, exam name, certification vendor (microsoft, comptia)."
+                }} %>
     <%= f.button :submit %>
-
   <% end %>
 </div>
 <%= link_to "Go Back", '/', {:id => "back_button"} %>

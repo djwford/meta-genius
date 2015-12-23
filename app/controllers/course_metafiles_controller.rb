@@ -50,8 +50,8 @@ class CourseMetafilesController < ApplicationController
           }
         if(metafile.topics_tags)
            xml.topicsTags{
-             metafile.topics_list.split(",").strip.each do |x|
-               xml.topicTag x
+             metafile.topics_list.split(",").each do |x|
+               xml.topicTag x.strip
              end
            }
         end

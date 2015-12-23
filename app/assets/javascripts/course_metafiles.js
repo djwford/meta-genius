@@ -4,7 +4,7 @@ $(document).ready(function(){
   var fields = $("#courseTitle, #author, #course_metafile_short_description, #course_metafile_description, #moduleCount, #courseID");
   $("input:submit").click(function(){
     // checks for presence
-    for(var i=0; i <= fields.length; i++){
+    for(var i=0; i < fields.length; i++){
       if($(fields[i]).val() == ""){
         event.preventDefault();
         $(fields[i]).css({'background-color': '#FFAC65'});
@@ -14,7 +14,7 @@ $(document).ready(function(){
     }
     // strip newlines from descriptions
     var descriptions = $("#course_metafile_description, #course_metafile_short_description")
-    for(var i=0; i <= descriptions.length; i++){
+    for(var i=0; i < descriptions.length; i++){
       var currentDescription = $(descriptions[i]).val();
       $(descriptions[i]).val((currentDescription).replace(/\n/g," "));
     }

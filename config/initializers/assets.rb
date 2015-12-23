@@ -5,6 +5,7 @@ Rails.application.config.assets.version = '1.0'
 
 %w( course_metafiles module_metafiles welcome).each do |controller|
   Rails.application.config.assets.precompile += ["#{controller}.js", "#{controller}.scss"]
+  Rails.application.config.assets.precompile += %w( tags.js )
 end
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path

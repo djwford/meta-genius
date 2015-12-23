@@ -1,3 +1,4 @@
+Opentip.defaultStyle = "dark";
 function setHREF(){
   var clips = $('.clip_container');
   var courseTitle = $("#courseID").val().trim();

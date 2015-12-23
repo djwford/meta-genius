@@ -20,6 +20,17 @@ class CourseMetafilesController < ApplicationController
 
   def create_xml(metafile)
     begin
+      allTags = [metafile.audience_tags]
+      allTags = allTags + metafile.tools_tags.split(",")
+      allTags = allTags + metafile.certification_tags.split(",")
+      allTags = allTags + metafile.topics_list.split(",")
+      allTags = allTags.uniq
+      downcaseAllTags = []
+      allTags.each do |tag|
+        downcaseAllTags.push tag.downcase.strip
+      end
+      allTags = downcaseAllTags.uniq
+
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
           xml.title metafile.title
@@ -30,11 +41,27 @@ class CourseMetafilesController < ApplicationController
               xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.course_id.strip.gsub(/\s/, "-").downcase}-m#{(x + 1)}")
             end
           }
+
+          # topics/search keywords
           xml.topics{
-            metafile.topics_list.split(",").each do |topic|
+            metafile.topics_tags.split(",").each do |topic|
               xml.topic topic.strip.downcase.gsub(/\s/,"-")
             end
           }
+        if(metafile.topics_tags)
+           xml.topicsTags{
+             metafile.topics_list.split(",").each do |x|
+               xml.topicTag x
+             end
+           }
+        end
+        # tags
+        xml.tags{
+          allTags.each do |target|
+            xml.tag target
+          end
+        }
+
         # audience tags
         if(metafile.audience_tags)
           xml.audienceTags{
@@ -60,7 +87,9 @@ class CourseMetafilesController < ApplicationController
           # cert tags
         if(metafile.certification_tags)
           xml.certificationsTags{
-            xml.certificationsTag metafile.certification_tags
+            metafile.certification_tags.split(",").each do |tag|
+              xml.certificationsTag tag
+            end
           }
         end
       }

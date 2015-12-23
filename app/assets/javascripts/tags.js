@@ -1,0 +1,2 @@
+
+Opentip.defaultStyle = "dark";

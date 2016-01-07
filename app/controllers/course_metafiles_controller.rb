@@ -33,6 +33,7 @@ class CourseMetafilesController < ApplicationController
 
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
+          xml.comment metafile.software_required
           xml.title metafile.title
           xml.shortDescription metafile.short_description
           xml.description metafile.description
@@ -116,6 +117,7 @@ class CourseMetafilesController < ApplicationController
   private
   def course_metafile_params
     params.require(:course_metafile).permit(:title,
+                                            :software_required,
                                             :short_description,
                                             :description,
                                             :author,

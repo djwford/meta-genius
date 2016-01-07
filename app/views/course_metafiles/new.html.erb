@@ -14,6 +14,17 @@
                 :input_html => {:rows => 11, :cols => 20} %>
     <%= f.input :description, :as => :text,
                 :input_html => {:rows => 20, :cols => 50} %>
+    <%= f.input :software_required, :label => "Required Software",
+                :input_html => {:rows => 1, :cols => 20,
+                                  :data =>
+                                  {
+                                    :ot => "Please list the software required to
+                                            follow along with the demos in this course,
+                                            including the latest revision numbers
+                                            (e.g. maya-2015, photoshop-cc-2015)."
+                                  }
+                                }
+    %>
     <%= f.input :module_count,
                 :input_html => {
                   :id => "moduleCount",
@@ -110,7 +121,7 @@
                       scenario(s)."
                     }
                 }
-    %>  
+    %>
     <%= f.button :submit %>
   <% end %>
 </div>

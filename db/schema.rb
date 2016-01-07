@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217162935) do
+ActiveRecord::Schema.define(version: 20160107203029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20151217162935) do
     t.text     "topics_tags"
     t.text     "tools_tags"
     t.text     "certification_tags"
+    t.string   "software_required"
   end
 
   create_table "course_modules", force: :cascade do |t|

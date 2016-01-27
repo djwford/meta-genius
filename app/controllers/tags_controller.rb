@@ -33,38 +33,45 @@ class TagsController < ApplicationController
 
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
-          # topics/search keywords
+        # topics
+        if(!(tags.topics_tags == ""))
           xml.topics{
             tags.topics_tags.split(",").each do |topic|
               xml.topic topic.strip.downcase.gsub(/\s/,"-")
             end
           }
-        if(tags.topics_tags)
-
-            xml.topicsTags{
-              tags.topics_list.split(",").each do |x|
-                xml.topicTag x
-            end
-           }
+        else
+          xml.topics{
+            xml.topic nil
+          }
         end
+        xml.category nil
         # tags
-        xml.tags{
-          allTags.each do |tag|
-            xml.tag tag
-          end
-        }
-        # audience tags
+        if(!(allTags.empty?))
+          xml.tags{
+            allTags.each do |target|
+              xml.tag target
+            end
+          }
+        else
+          xml.tags{
+            xml.tag nil
+          }
+        end
+         # audience tags
         if(tags.audience_tags)
           xml.audienceTags{
             xml.audienceTag tags.audience_tags
           }
         else
           xml.audienceTags{
-            xml.audienceTag "foo"
+            xml.audienceTag nil
           }
         end
         # tools tags
-        if(tags.tools_tags)
+
+        if(!(tags.tools_tags == ""))
+          puts "true"
           xml.toolsTags{
             tags.tools_tags.split(",").each do |tool|
               xml.toolsTag tool.strip.downcase.gsub(/\s/,"-")
@@ -72,15 +79,31 @@ class TagsController < ApplicationController
           }
         else
           xml.toolsTags{
-            xml.toolsTag "foo"
-            }
+            xml.toolsTag nil
+          }
+        end
+
+        if(!(tags.topics_tags == ""))
+           xml.topicsTags{
+             tags.topics_list.split(",").each do |x|
+               xml.topicTag x.strip
+             end
+           }
+        else
+           xml.topicsTags{
+            xml.topicTag nil
+           }
         end
           # cert tags
-        if(tags.certification_tags)
+        if(!(tags.certification_tags == ""))
           xml.certificationsTags{
             tags.certification_tags.split(",").each do |tag|
               xml.certificationsTag tag
             end
+          }
+        else
+          xml.certificationsTags{
+            xml.certificationsTag nil
           }
         end
       }
@@ -95,7 +118,7 @@ class TagsController < ApplicationController
   full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)
   begin
     x = File.new(full_meta_path, "w")
-    x.write builder.to_xml
+    x.write builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS | Nokogiri::XML::Node::SaveOptions::FORMAT)
     x.close
     logger.tagged("tags_metafile_success") {logger.info "Metafile saved. Full path: #{full_meta_path}"}
   rescue => error

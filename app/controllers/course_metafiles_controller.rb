@@ -55,11 +55,11 @@ class CourseMetafilesController < ApplicationController
           }
         end
         # category
-        if(!(metafile.category == ""))
-          xml.category metafile.category
-        else
+#         if(!(metafile.category == ""))
+#           xml.category metafile.category
+#         else
           xml.category nil
-        end
+#         end
         # tags
         if(!(allTags.empty?))
           xml.tags{

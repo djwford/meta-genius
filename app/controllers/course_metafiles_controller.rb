@@ -42,39 +42,50 @@ class CourseMetafilesController < ApplicationController
               xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.course_id.strip.gsub(/\s/, "-").downcase}-m#{(x + 1)}")
             end
           }
-
-          # topics/search keywords
+        # topics
+        if(!(metafile.topics_tags == ""))
           xml.topics{
             metafile.topics_tags.split(",").each do |topic|
               xml.topic topic.strip.downcase.gsub(/\s/,"-")
             end
           }
-        if(metafile.topics_tags)
-           xml.topicsTags{
-             metafile.topics_list.split(",").each do |x|
-               xml.topicTag x.strip
-             end
-           }
+        else
+          xml.topics{
+            xml.topic nil
+          }
+        end
+        # category
+        if(!(metafile.category == ""))
+          xml.category metafile.category
+        else
+          xml.category nil
         end
         # tags
-        xml.tags{
-          allTags.each do |target|
-            xml.tag target
-          end
-        }
-
-        # audience tags
+        if(!(allTags.empty?))
+          xml.tags{
+            allTags.each do |target|
+              xml.tag target
+            end
+          }
+        else
+          xml.tags{
+            xml.tag nil
+          }
+        end
+         # audience tags
         if(metafile.audience_tags)
           xml.audienceTags{
             xml.audienceTag metafile.audience_tags
           }
         else
           xml.audienceTags{
-            xml.audienceTag "foo"
+            xml.audienceTag nil
           }
         end
         # tools tags
-        if(metafile.tools_tags)
+
+        if(!(metafile.tools_tags == ""))
+          puts "true"
           xml.toolsTags{
             metafile.tools_tags.split(",").each do |tool|
               xml.toolsTag tool.strip.downcase.gsub(/\s/,"-")
@@ -82,15 +93,31 @@ class CourseMetafilesController < ApplicationController
           }
         else
           xml.toolsTags{
-            xml.toolsTag "foo"
-            }
+            xml.toolsTag nil
+          }
+        end
+
+        if(!(metafile.topics_tags == ""))
+           xml.topicsTags{
+             metafile.topics_list.split(",").each do |x|
+               xml.topicTag x.strip
+             end
+           }
+        else
+           xml.topicsTags{
+            xml.topicTag nil
+           }
         end
           # cert tags
-        if(metafile.certification_tags)
+        if(!(metafile.certification_tags == ""))
           xml.certificationsTags{
             metafile.certification_tags.split(",").each do |tag|
               xml.certificationsTag tag
             end
+          }
+        else
+          xml.certificationsTags{
+            xml.certificationsTag nil
           }
         end
       }
@@ -99,18 +126,18 @@ class CourseMetafilesController < ApplicationController
     logger.tagged("course_metafile_fatal") { logger.debug "Failed to create_xml four course meta. Params: #{metafile}. Error: #{error.inspect}" }
     end
     # create the file
-  fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
-  # make the folder
-  system 'mkdir', '-p', ENV['METAFILE_PATH']
-  full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)
-  begin
-    x = File.new(full_meta_path, "w")
-    x.write builder.to_xml
-    x.close
-    logger.tagged("course_metafile_success") {logger.info "Metafile saved. Full path: #{full_meta_path}"}
-  rescue => error
-    logger.tagged("course_metafile_fatal") {logger.info "Failed to save course metafile. Full path: #{full_meta_path}. Metafile: #{metafile}. Error: #{error.inspect}"}
-  end
+    fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
+    # make the folder
+    system 'mkdir', '-p', ENV['METAFILE_PATH']
+    full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)
+    begin
+      x = File.new(full_meta_path, "w")
+      x.write builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS | Nokogiri::XML::Node::SaveOptions::FORMAT)
+      x.close
+      logger.tagged("course_metafile_success") {logger.info "Metafile saved. Full path: #{full_meta_path}"}
+    rescue => error
+      logger.tagged("course_metafile_fatal") {logger.info "Failed to save course metafile. Full path: #{full_meta_path}. Metafile: #{metafile}. Error: #{error.inspect}"}
+    end
     return full_meta_path
   end
 
@@ -127,6 +154,7 @@ class CourseMetafilesController < ApplicationController
                                             :tools_tags,
                                             :audience_tags,
                                             :topics_tags,
+                                            :category,
                                             :certification_tags)
 
   end

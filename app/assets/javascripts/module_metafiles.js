@@ -18,7 +18,7 @@ function setHREF(){
 
 $(document).ready(function(){
   // perform basic validations before submission
-  var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #metafile_description, #courseID");
+  var fields = $("#courseTitle, #moduleNumber, #author, #metafile_title, #module_metafile_description, #courseID");
   $("input:submit").click(function(){
     // checks for presence
     for(var i=0; i <= fields.length; i++){

@@ -83,14 +83,14 @@ class TagsController < ApplicationController
           }
         end
 
-        if(!(tags.topics_tags == ""))
-           xml.topicsTags{
+        if(!(tags.topics_list == ""))
+           xml.topicTags{
              tags.topics_list.split(",").each do |x|
                xml.topicTag x.strip
              end
            }
         else
-           xml.topicsTags{
+           xml.topicTags{
             xml.topicTag nil
            }
         end

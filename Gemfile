@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby "2.2.4"
 
 gem 'rails', '4.2.3'
 gem 'simple_form'
@@ -10,7 +9,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'nokogiri', '~> 1.6', '>= 1.6.6.2'
+gem 'nokogiri', '1.6.6.3'
 gem 'figaro'
 
 group :development, :test do

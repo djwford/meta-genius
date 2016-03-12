@@ -58,7 +58,7 @@ class CourseMetafilesController < ApplicationController
 #         if(!(metafile.category == ""))
 #           xml.category metafile.category
 #         else
-          xml.category nil
+          xml.category " "
 #         end
         # tags
         if(!(allTags.empty?))
@@ -97,14 +97,14 @@ class CourseMetafilesController < ApplicationController
           }
         end
 
-        if(!(metafile.topics_tags == ""))
-           xml.topicsTags{
+        if(!(metafile.topics_list == ""))
+           xml.topicTags{
              metafile.topics_list.split(",").each do |x|
                xml.topicTag x.strip
              end
            }
         else
-           xml.topicsTags{
+           xml.topicTags{
             xml.topicTag nil
            }
         end
@@ -132,7 +132,7 @@ class CourseMetafilesController < ApplicationController
     full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)
     begin
       x = File.new(full_meta_path, "w")
-      x.write builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS | Nokogiri::XML::Node::SaveOptions::FORMAT)
+      x.write builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::FORMAT)
       x.close
       logger.tagged("course_metafile_success") {logger.info "Metafile saved. Full path: #{full_meta_path}"}
     rescue => error

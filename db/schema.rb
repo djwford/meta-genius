@@ -72,11 +72,4 @@ ActiveRecord::Schema.define(version: 20160126172644) do
     t.text     "topics_list"
   end
 
-  create_table "topics", force: :cascade do |t|
-    t.integer  "course_metafile_id"
-    t.text     "topics_list"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
 end

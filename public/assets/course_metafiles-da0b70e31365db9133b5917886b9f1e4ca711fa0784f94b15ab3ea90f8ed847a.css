@@ -1,0 +1,16 @@
+/* line 4, /home/nitrous/meta-genius/app/assets/stylesheets/course_metafiles.scss */
+.course_link {
+  /*   margin: 0 %; */
+  float: left;
+}
+/* line 5, /home/nitrous/meta-genius/app/assets/stylesheets/course_metafiles.scss */
+.course_link a {
+  font-size: 16px;
+}
+/* line 8, /home/nitrous/meta-genius/app/assets/stylesheets/course_metafiles.scss */
+.course_link p {
+  text-align: left;
+  color: #27A0A0;
+  width: 60%;
+  margin: 0 auto;
+}

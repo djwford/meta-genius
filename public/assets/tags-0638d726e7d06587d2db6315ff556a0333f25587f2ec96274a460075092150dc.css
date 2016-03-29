@@ -1,0 +1,4 @@
+/* line 4, /home/nitrous/meta-genius/app/assets/stylesheets/tags.scss */
+#tag_audience_tags:focus {
+  border: 1px solid #4d90fe !important;
+}

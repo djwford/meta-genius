@@ -12,8 +12,18 @@
     <%= f.input :short_description,
                 :as => :text,
                 :input_html => {:rows => 11, :cols => 20} %>
+
     <%= f.input :description, :as => :text,
-                :input_html => {:rows => 20, :cols => 50} %>
+                :input_html => {
+                  :rows => 20,
+                  :cols => 50,
+                  id: 'course_desc_tip',
+                label: "Description",
+                }
+                %>
+    <div class="course_link input">
+      <p><%= link_to 'Click here for more information about writing course descriptions', 'https://authors.pluralsight.com/writing-course-descriptions/', target: 'blank'%></p><br>
+    </div>
     <%= f.input :software_required, :label => "Required Software",
                 :input_html => {:rows => 1, :cols => 20,
                                   :data =>
@@ -34,6 +44,14 @@
                 :data => {
                   :ot => "NOT including the course preview."
                 }%>
+      <div class="course_link input">
+        <p>In the following section, please provide faceted tags to help users find your course through the browse/filter experience. Hover over each
+           input box to see a short description of the facet. For the sake of limiting the number of tags in the browse experience, please only use tags that currently exist in the system. If you don't see a tag on the following list that you feel is necessary to add to your course, please notify your editor and they will review.
+          <%= link_to 'Click here to see a list of active tags', 'https://docs.google.com/spreadsheets/d/18V2q7ijmt1ilQIhznnCRd2ReQdk_Q0sINd02U14WYZw/edit?usp=sharing', target: 'blank' %>
+           </p>
+        <br/>
+    </div>
+
     <%= f.input :audience_tags,
                 :label => "Audience",
                 :collection =>

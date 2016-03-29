@@ -9,7 +9,7 @@ body{
 #form_container {
   font-family: 'Open Sans Condensed', arial, sans;
 /*   width: 900px; */
-  width: 40%;
+  width: 60c%;
   min-width: 550px;
   max-width: 950px;
   padding: 30px;
@@ -44,7 +44,10 @@ body{
     border: none;
     border-bottom: 1px solid #ddd;
     background: transparent;
-    margin-bottom: 10px;
+    font-size: 1em;
+    font-family: 'Open Sans Condensed', sans-serif;
+
+/*     margin-bottom: 10px; */
   }
 
   textarea{
@@ -91,7 +94,7 @@ body{
   }
   label{
     width:150px;
-    margin-top: 5p;
+    margin-bottom: 5px;
     display:block;
     float:left;
     font-size: 18px;
@@ -106,7 +109,6 @@ body{
         border: none;
     border-bottom: 1px solid #ddd;
     background: transparent;
-    margin-bottom: 10px;
   }
   .input{
     display: block;

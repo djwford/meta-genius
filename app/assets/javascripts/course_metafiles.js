@@ -1,5 +1,7 @@
 Opentip.defaultStyle = "dark";
+
 $(document).ready(function(){
+
   // perform basic validations before submission
   var fields = $("#courseTitle, #author, #course_metafile_short_description, #course_metafile_description, #moduleCount, #courseID");
   $("input:submit").click(function(){
@@ -24,4 +26,7 @@ $(document).ready(function(){
   $(fields).click(function(){
     $(this).css({"background-color": "#FFFFFF"})
   });
+
+
+
 });

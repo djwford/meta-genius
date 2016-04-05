@@ -7,7 +7,15 @@
     <%= f.input :course_id,
                 :label => "Course ID",
                 :input_html => {:id => "courseID",
-                :placeholder => "sample-course-id"} %>
+                  :placeholder => "sample-course-id",
+                  :data =>
+                    {
+                      :ot => "Your Course ID is on your Statement of Work. It is the simplified, lowercase, and dash-separated version of your course title that you have been using to name your video clips."
+                    }
+
+                  } %>
+
+
     <%= f.input :author, :input_html => {:id => "author"} %>
     <%= f.input :short_description,
                 :as => :text,

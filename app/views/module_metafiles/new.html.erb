@@ -11,7 +11,7 @@
     <%= f.input :title, :label => "Module Title" %>
     <%= f.input :description, :as => :text, :input_html => {:rows => 20, :cols => 50} %>
 <!--     <div id="clips_container"> -->
-      <p id="clips_title">Clip Titles (empty fields will be ommitted in the meta file)</p>
+      <p id="clips_title">Clip Titles (empty fields will be omitted in the meta file)</p>
       <% iterator = 1 %>
       <%= f.simple_fields_for :clips do |c| %>
         <div class="clip_container">

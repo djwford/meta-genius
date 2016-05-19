@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126172644) do
+ActiveRecord::Schema.define(version: 20160519160641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "audience_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "certification_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "clips", force: :cascade do |t|
     t.string   "href"
@@ -61,6 +71,11 @@ ActiveRecord::Schema.define(version: 20160126172644) do
     t.string   "course_id"
   end
 
+  create_table "search_keywords", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tags", force: :cascade do |t|
     t.text     "audience_tags"
     t.text     "topics_tags"
@@ -70,6 +85,11 @@ ActiveRecord::Schema.define(version: 20160126172644) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.text     "topics_list"
+  end
+
+  create_table "tool_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

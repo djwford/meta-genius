@@ -11,6 +11,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'nokogiri', '1.6.6.3'
 gem 'figaro'
+gem 'compass-rails'
+gem 'chosen-rails'
+gem "slim-rails"
 
 group :development, :test do
   gem 'byebug'
@@ -20,4 +23,3 @@ group :development, :test do
   #gem 'spring', '~> 1.4.0'
   gem 'puma'
 end
-

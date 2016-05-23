@@ -11,19 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519160641) do
+ActiveRecord::Schema.define(version: 20160519214124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "audience_tags", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "name"
+    t.text     "description"
   end
 
   create_table "certification_tags", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "name"
+    t.text     "description"
   end
 
   create_table "clips", force: :cascade do |t|
@@ -72,8 +76,19 @@ ActiveRecord::Schema.define(version: 20160519160641) do
   end
 
   create_table "search_keywords", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "name"
+    t.text     "description"
+  end
+
+  create_table "suggested_tags", force: :cascade do |t|
+    t.string   "tag_type"
+    t.integer  "course_metafile_id"
+    t.string   "description"
+    t.string   "name"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "tags", force: :cascade do |t|
@@ -85,11 +100,22 @@ ActiveRecord::Schema.define(version: 20160519160641) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.text     "topics_list"
+    t.string   "name"
+    t.text     "description"
   end
 
   create_table "tool_tags", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "name"
+    t.text     "description"
+  end
+
+  create_table "topic_tags", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "name"
+    t.text     "description"
   end
 
 end

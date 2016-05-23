@@ -174,10 +174,6 @@ textarea{
   width: 10%;
   border: none;
   float: left;
-  padding: 0px;
-}
-#suggest_button{
-  margin-left: 10%;
 }
 .name_input{
   width: 50%;

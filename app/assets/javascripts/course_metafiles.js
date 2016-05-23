@@ -27,6 +27,17 @@ $(document).ready(function(){
     $(this).css({"background-color": "#FFFFFF"})
   });
 
+  // enable chosen
+  $(".chosen-select").chosen({width: "100%"});
 
+  // suggested tags hide/reveal
+  $(".suggested_input").hide();
+  $("#suggest_button").click(function(){
+    $(".suggested_input:hidden:first").slideToggle("fast");
+  });
+  $("#close_button").click(function(){
 
+    $(this).closest(".suggested_input").slideToggle('slow');
+    $(this).closest('.suggested_input').find("input:text").val('');
+  });
 });

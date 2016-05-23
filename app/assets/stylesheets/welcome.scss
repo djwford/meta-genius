@@ -17,8 +17,16 @@ h1{
 
 a{
   color: #FFA75D;
-  font-size: 30px;
+  font-size: 18px;
 }
-p{
-  text-align: center;
+img{display: inline;
+  padding-right: 3px;
+  }
+// p tags used for image-containing labels
+p pseudo_label{
+  text-align: left;
+}
+
+#short_description_label, #long_description_label{
+  margin-bottom: 5px;
 }

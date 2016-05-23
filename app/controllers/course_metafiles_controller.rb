@@ -1,11 +1,23 @@
 class CourseMetafilesController < ApplicationController
+  require 'json'
+  helper CourseMetafilesHelper
 
   def new
     @metafile = CourseMetafile.new
+    @topics = TopicTag.all.order("name asc").map {|x| x.name}
+    @tools = ToolTag.all.order("name asc").map {|x| x.name}
+    @certifications = CertificationTag.all.order("name asc").map {|x| x.name}
+    30.times { @metafile.suggested_tags.build }
   end
 
   def create
     @metafile = CourseMetafile.new(course_metafile_params)
+
+    puts "tools tags! \n"
+    puts course_metafile_params.inspect
+    @metafile.topics_list = params['course_metafile']['topics_list']
+    @metafile.tools_tags = params['course_metafile']['tools_tags']
+    @metafile.certification_tags = params['course_metafile']['certification_tags']
     if @metafile.save
       response.headers['Content-Type'] = "text/xml; charset=UTF-8"
       response.headers['Content-Disposition'] = "attachment; filename=metafile.xml"
@@ -19,17 +31,12 @@ class CourseMetafilesController < ApplicationController
 
 
   def create_xml(metafile)
+    puts "params: \n"
+    puts metafile.inspect
     begin
-      allTags = [metafile.audience_tags]
-      allTags = allTags + metafile.tools_tags.split(",")
-      allTags = allTags + metafile.certification_tags.split(",")
-      allTags = allTags + metafile.topics_list.split(",")
-      allTags = allTags.uniq
-      downcaseAllTags = []
-      allTags.each do |tag|
-        downcaseAllTags.push tag.downcase.strip
-      end
-      allTags = downcaseAllTags.uniq
+      allTags = [metafile.audience_tags] + metafile.tools_tags + metafile.certification_tags
+      metafile.topics_tags.split(',').each {|y| allTags << y }
+      allTags.uniq!
 
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
@@ -39,13 +46,14 @@ class CourseMetafilesController < ApplicationController
           xml.description metafile.description
           xml.modules {
             metafile.module_count.times do |x|
-              xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase), :name => "#{metafile.course_id.strip.gsub(/\s/, "-").downcase}-m#{(x + 1)}")
+              xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase),
+                :name => "#{metafile.course_id.strip.gsub(/\s/, "-").downcase}-m#{(x + 1)}")
             end
           }
         # topics
-        if(!(metafile.topics_tags == ""))
+        if(metafile.topics_tags and !(metafile.topics_tags.empty?))
           xml.topics{
-            metafile.topics_tags.split(",").each do |topic|
+            metafile.topics_tags.split(',').each do |topic|
               xml.topic topic.strip.downcase.gsub(/\s/,"-")
             end
           }
@@ -54,17 +62,11 @@ class CourseMetafilesController < ApplicationController
             xml.topic nil
           }
         end
-        # category
-#         if(!(metafile.category == ""))
-#           xml.category metafile.category
-#         else
-          xml.category " "
-#         end
-        # tags
-        if(!(allTags.empty?))
+        xml.category " "
+        if(allTags and !(allTags.empty?))
           xml.tags{
             allTags.each do |target|
-              xml.tag target
+              unless target.blank? then xml.tag target end
             end
           }
         else
@@ -84,11 +86,12 @@ class CourseMetafilesController < ApplicationController
         end
         # tools tags
 
-        if(!(metafile.tools_tags == ""))
-          puts "true"
+        if(metafile.tools_tags)
           xml.toolsTags{
-            metafile.tools_tags.split(",").each do |tool|
-              xml.toolsTag tool.strip.downcase.gsub(/\s/,"-")
+            metafile.tools_tags.each do |tool|
+              unless tool.blank?
+                xml.toolsTag tool.strip.downcase.gsub(/\s/,"-")
+              end
             end
           }
         else
@@ -97,9 +100,10 @@ class CourseMetafilesController < ApplicationController
           }
         end
 
-        if(!(metafile.topics_list == ""))
-           xml.topicTags{
-             metafile.topics_list.split(",").each do |x|
+        if(metafile.topics_list)
+          topics = JSON::parse(metafile.topics_list).reject {|x| x.empty?}
+          xml.topicTags{
+             topics.each do |x|
                xml.topicTag x.strip
              end
            }
@@ -109,10 +113,12 @@ class CourseMetafilesController < ApplicationController
            }
         end
           # cert tags
-        if(!(metafile.certification_tags == ""))
+        if(metafile.certification_tags)
           xml.certificationsTags{
-            metafile.certification_tags.split(",").each do |tag|
-              xml.certificationsTag tag
+            metafile.certification_tags.each do |tag|
+              unless tag.blank?
+                xml.certificationsTag tag
+              end
             end
           }
         else
@@ -120,10 +126,16 @@ class CourseMetafilesController < ApplicationController
             xml.certificationsTag nil
           }
         end
+        # process suggested_tags, add as notes
+        if metafile.suggested_tags
+          metafile.suggested_tags.each do |tag|
+            xml.comment "suggested #{tag.tag_type}: '#{tag.name}' | \"#{tag.description}\""
+          end
+        end
       }
     end
     rescue => error
-    logger.tagged("course_metafile_fatal") { logger.debug "Failed to create_xml four course meta. Params: #{metafile}. Error: #{error.inspect}" }
+    logger.tagged("course_metafile_fatal") { logger.debug "Failed to create_xml for course meta. Params: #{metafile}. Error: #{error.inspect}, #{error.backtrace}" }
     end
     # create the file
     fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
@@ -136,7 +148,9 @@ class CourseMetafilesController < ApplicationController
       x.close
       logger.tagged("course_metafile_success") {logger.info "Metafile saved. Full path: #{full_meta_path}"}
     rescue => error
-      logger.tagged("course_metafile_fatal") {logger.info "Failed to save course metafile. Full path: #{full_meta_path}. Metafile: #{metafile}. Error: #{error.inspect}"}
+      logger.tagged("course_metafile_fatal") {
+        logger.info "Failed to save course metafile. "\
+          "Full path: #{full_meta_path}. Metafile: #{metafile}. Error: #{error.inspect}"}
     end
     return full_meta_path
   end
@@ -150,13 +164,11 @@ class CourseMetafilesController < ApplicationController
                                             :author,
                                             :module_count,
                                             :course_id,
-                                            :topics_list,
-                                            :tools_tags,
                                             :audience_tags,
                                             :topics_tags,
                                             :category,
-                                            :certification_tags)
+                                            :suggested_tag,
+                                            suggested_tags_attributes: [:name, :description, :tag_type])
 
   end
 end
-

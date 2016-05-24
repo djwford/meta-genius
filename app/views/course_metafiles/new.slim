@@ -90,10 +90,10 @@ div id="form_container"
         div.tags_input_container
           p.pseudo_label
             | Audience
-            = link_to help_image "This tag answers the question, "\
-                                 "'Who is this course designed for?' "\
-                                 "Pick the tag that best describes the course's "\
-                                 "target audience."
+            = help_image "This tag answers the question, "\
+                         "'Who is this course designed for?' "\
+                         "Pick the tag that best describes the course's "\
+                         "target audience."
           = f.input :audience_tags,
             label: false,
             collection: [ 'architecture-construction',
@@ -108,13 +108,13 @@ div id="form_container"
         div.tags_input_container
           p.pseudo_label
             | Topics
-            = link_to help_image "Complete the sentence, 'This course is "\
-                                 "about ______.' Include one or a handful of "\
-                                 "topics. For example, a course about configuring "\
-                                 "VMware vSphere 6 should include tags for "\
-                                 "vmware-vsphere and virtualization. Try to "\
-                                 "be as specific and comprehensive as "\
-                                 "possible when tagging this course."
+            = help_image "Complete the sentence, 'This course is "\
+                         "about ______.' Include one or a handful of "\
+                         "topics. For example, a course about configuring "\
+                         "VMware vSphere 6 should include tags for "\
+                         "vmware-vsphere and virtualization. Try to "\
+                         "be as specific and comprehensive as "\
+                         "possible when tagging this course."
           = f.input :topics_list, 
             collection: @topics, 
             label: false,
@@ -125,14 +125,14 @@ div id="form_container"
         div.tags_input_container        
           p.pseudo_label
             | Tools
-            = link_to help_image "Tools tags identify the tools and technology"\ 
-                                 "used in the course. Use as many of these as "\
-                                 "necessary to be comprehensive. Please use "\
-                                 "generic tool tags (examples: windows-server, "\
-                                 "photoshop, visual-studio) as well as the specific version "\
-                                 "used in the course (examples: windows-server-2012, "\
-                                 "windows-server-2012-r2, photoshop-cc-2015, "\
-                                 "visual-studio-2015)."
+            = help_image "Tools tags identify the tools and technology"\ 
+                         "used in the course. Use as many of these as "\
+                         "necessary to be comprehensive. Please use "\
+                         "generic tool tags (examples: windows-server, "\
+                         "photoshop, visual-studio) as well as the specific version "\
+                         "used in the course (examples: windows-server-2012, "\
+                         "windows-server-2012-r2, photoshop-cc-2015, "\
+                         "visual-studio-2015)."
           = f.input :tools_tags,
             collection: @tools,
             label: false,
@@ -143,10 +143,10 @@ div id="form_container"
         div.tags_input_container        
           p.pseudo_label
           | Certification(s)
-          = link_to help_image "If the course prepares the viewer for a "\
-                               "certification exam, Please use the tags for: "\
-                               "exam number, exam name, certification "\
-                               "vendor (microsoft, comptia)."
+          = help_image "If the course prepares the viewer for a "\
+                       "certification exam, Please use the tags for: "\
+                       "exam number, exam name, certification "\
+                       "vendor (microsoft, comptia)."
           = f.input :certification_tags,
             collection: @certifications,    
             label: false,
@@ -158,9 +158,9 @@ div id="form_container"
         div.tags_input_container                               
           p.pseudo_label 
             | Additional Keywords
-            = link_to help_image "Provide any additional keywords relevant "\
-                                 "to your course, such as the subject of "\
-                                 "your example scenario(s)."
+            = help_image "Provide any additional keywords relevant "\
+                         "to your course, such as the subject of "\
+                         "your example scenario(s)."
           = f.input :topics_tags, 
             label: false,
             input_html: { placeholder: "Add topics as a comma-separated list",

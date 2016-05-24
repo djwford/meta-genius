@@ -14,6 +14,7 @@ gem 'figaro'
 gem 'compass-rails'
 gem 'chosen-rails'
 gem "slim-rails"
+gem "rails_12factor"
 
 group :development, :test do
   gem 'byebug'

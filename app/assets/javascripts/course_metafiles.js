@@ -33,11 +33,14 @@ $(document).ready(function(){
   // suggested tags hide/reveal
   $(".suggested_input").hide();
   $("#suggest_button").click(function(){
-    $(".suggested_input:hidden:first").slideToggle("fast");
+    var hidden_div = $(".suggested_input:hidden:first");
+    $(hidden_div).slideToggle("fast");
+    $(hidden_div).find("input:text:first").focus();    
   });
-  $("#close_button").click(function(){
-
+  $(".close_button").click(function(){
     $(this).closest(".suggested_input").slideToggle('slow');
     $(this).closest('.suggested_input').find("input:text").val('');
+    $(this).closest('.suggested_input').find(".tag_type_input").val('');
+
   });
 });

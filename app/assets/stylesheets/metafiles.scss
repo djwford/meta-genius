@@ -140,27 +140,23 @@
 //   }
 // }
 //
-// #back_button{
-//
-//     font-size: 25px;
-//     padding: 8px 18px;
-//   text-align: center;
-//   height: 54px;
-//     width: 5%;
-//     min-width: 100px;
-//     background-color: #FFA75D;
-//     color: #FFFFFF;
-//
-//       text-decoration: none !important;
-//
-//   position: fixed;
-//   top:0;
-//   left:0;
-//   &:hover{
-//     background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
-//     background-color:#34CACA;
-// }
-// }
+#back_button{
+  font-size: 18px;
+  padding: 5px 5px;
+  text-align: center;
+  width: 130px;
+  min-width: 100px;
+  background-color: #FFA75D;
+  color: #FFFFFF;
+  text-decoration: none !important;
+  position: absolute;
+  top:0;
+  left:0;
+  &:hover{
+    background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+    background-color:#34CACA;
+}
+}
 //
 
 textarea{
@@ -169,15 +165,18 @@ textarea{
 .suggested_input{
   width: 100%;
 }
-#close_button{
-  color: red;
+.close_button{
+  color: white;
+  background-color: red;
   width: 10%;
-  border: none;
   float: left;
   padding: 0px;
 }
 #suggest_button{
   margin-left: 10%;
+}
+#tagging_instructions{
+  padding: 10px 2em 10px 2em;;
 }
 .name_input{
   width: 50%;
@@ -188,4 +187,25 @@ textarea{
 .description_input{
   width: 80%;
   margin-left: 10%;
+  overflow: scroll;
+}
+.tag_description{
+  margin-bottom: 3px;
+  font-size: 0.9em;
+  color: rgba(0,0,0,0.7);
+}
+.tags_input_container{
+  margin-bottom: 1.5rem;
+}
+.tags_input_container select{
+  margin-bottom: 0;
+}
+#tags_master_container{
+  background-color: rgba(186,186,186,0.3);
+}
+.pseudo_label{
+  margin-bottom: 5px;
+}
+.help_image{
+  padding-left: 7px;
 }

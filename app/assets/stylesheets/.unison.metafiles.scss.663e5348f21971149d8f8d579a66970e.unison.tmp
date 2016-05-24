@@ -169,11 +169,15 @@ textarea{
 .suggested_input{
   width: 100%;
 }
-#close_button{
-  color: red;
+.close_button{
+  color: white;
+  background-color: red;
   width: 10%;
-  border: none;
   float: left;
+  padding: 0px;
+}
+#suggest_button{
+  margin-left: 10%;
 }
 .name_input{
   width: 50%;
@@ -184,4 +188,9 @@ textarea{
 .description_input{
   width: 80%;
   margin-left: 10%;
+}
+.tag_description{
+  margin-bottom: 3px;
+  font-size: 0.9em;
+  color: rgba(0,0,0,0.7);
 }

@@ -1,36 +1,39 @@
 div.row
   = link_to "Go Back", '/', {id: "back_button", class: "two columns"} 
 div id="form_container" 
-  h1.row Enter Course Info Here
+  h1.row Course Info
   = simple_form_for @metafile, html: {class: '' } do |f| 
     div.row
-      div.four.columns
-        = f.label "Author"
+      div.six.columns
+        p.pseudo_label Author
         = f.input :author, 
                   input_html: {class: "u-full-width", id: "author"}, 
                   label: false
     div.row
       div.six.columns
-        = f.label "Course Title" 
+        p.pseudo_label Course Title
         = f.input :title, label: false,
                   input_html: {id: "courseTitle", class: "u-full-width"}
       div.six.columns
-        = f.label "Course ID"
+        p.pseudo_label.u-full-width id="short_description_label"
+          | Course ID
+          = help_image "Your Course ID is on your Statement of Work."\
+                            " It is the simplified, lowercase, and dash-separated "\
+                            "version of your course title that you have been using "\
+                            "to name your video clips."
         = f.input :course_id,
           label: false,
           input_html: { id: "courseID",
                         class:  "u-full-width",
-                        placeholder: "sample-course-id",
-                        data: { ot: "Your Course ID is on your Statement of Work."\
-                                    " It is the simplified, lowercase, and dash-separated "\
-                                    "version of your course title that you have been using "\
-                                    "to name your video clips."}} 
+                        placeholder: "sample-course-id"} 
 
     div.row
       div.six.columns
         p.pseudo_label.u-full-width id="short_description_label"
           | Short Description
-          = help_image_link.html_safe
+          = link_to (help_image 'Click here for more information about writing course descriptions.'), 
+            course_descriptions_link,
+            target: "blank"
         = f.input :short_description,
                   as: :text,
                   input_html: {class: "u-full-width"},
@@ -39,8 +42,9 @@ div id="form_container"
       div.six.columns
         p.pseudo_label.u-full-width id="long_description_label"
           | Description
-          = help_image_link.html_safe
-
+          = link_to (help_image 'Click here for more information about writing course descriptions.'), 
+            course_descriptions_link,
+            target: "blank"
         = f.input :description, 
                   as: :text,
                   input_html: { id: 'course_desc_tip',
@@ -48,16 +52,17 @@ div id="form_container"
                   label: false
 
     div.row
-      div.four.columns
-        = f.label "Required Software"
-        = f.input :software_required, label: false,
-                  input_html: { data: { ot: "Please list the software required to"\
-                                            "follow along with the demos in this course,"\
-                                            "including the latest revision numbers"\
-                                            "(e.g. maya-2015, photoshop-cc-2015)." },
-                                class: 'u-full-width'}
-      div.two.columns
-        = f.label "Module Count"
+      div.six.columns
+        p.pseudo_label.u-full-width 
+          | Required Software 
+          = help_image "Please list the software required to "\
+                       "follow along with the demos in this course,"\
+                       " including the latest revision numbers"\
+                       " (e.g. maya-2015, photoshop-cc-2015)."
+          = f.input :software_required, label: false,
+                    input_html: {class: 'u-full-width'}
+      div.three.columns
+        p.pseudo_label Module Count
         = f.input :module_count,
                   label: false,
                   input_html: { id: "moduleCount",
@@ -66,96 +71,114 @@ div id="form_container"
                   data: { ot: "NOT including the course preview." }
     div.row
       div.twelve.columns
-        p 
-          |
-            In the following section, please provide faceted tags to help 
-            users find your course through the browse/filter experience.
-            Hover over each input box to see a short description of the facet. 
-            For the sake of limiting the number of tags in the browse experience, 
-            please only use tags that currently exist in the system. If you don't 
-            see a tag on the following list that you feel is necessary to add to 
-            your course, please notify your editor and they will review. 
-        p
-          = link_to 'Click here to see a list of active tags', 
-            'https://docs.google.com/spreadsheets/d/18V2q7ijmt1ilQIhznnCRd2ReQdk_Q0sINd02U14WYZw/edit?usp=sharing', 
-            target: 'blank' 
-    div.row
+
+    div.row id="tags_master_container"
+      h2 Course Tagging
+      p id="tagging_instructions"
+        |
+          In this section, please provide faceted tags to help 
+          users find your course through the browse/filter experience.  
+          For the sake of limiting the number of tags in the browse experience, 
+          please use tags that currently exist in the system. If you don't 
+          see a tag on the following list that you feel is necessary to add to 
+          your course, you can suggest we add it by clicking 'Suggest a Tag', then 
+          add the tag name, facet (tool, topic, or certification), and a short 
+          description of the tag. Click 
+        = link_to 'here', 
+          'https://docs.google.com/spreadsheets/d/18V2q7ijmt1ilQIhznnCRd2ReQdk_Q0sINd02U14WYZw/edit?usp=sharing', 
+          target: 'blank' 
+        |  to see a list of active tags.
+      
       div.six.columns
-        = f.label "Audience"
-        = f.input :audience_tags,
-          label: false,
-          collection: [ 'architecture-construction',
-                        'business-professional',
-                        'creative-professional',
-                        'data-professional',
-                        'it-ops',
-                        'manufacturing-design',
-                        'software-development' ],
-          selected: "creative-professional",
-          input_html: { data: { ot: "This tag answers the question,"\
-                                    "'Who is this course designed for?'"\
-                                    "Pick the tag that best describes"\
-                                    "the course's target audience.",
-                                placeholder: "Choose an Audience" },
-                        class: "u-full-width"}
-        = f.label "Topics"
-        = f.input :topics_list, 
-          collection: @topics, 
-          label: false,
-          input_html: { placeholder: "A comma-separated list of topics",
-                        class: "chosen-select u-full-width",
-                        multiple: true,
-                        data: { ot: "Complete the sentence,"\
-                                "'This course is about ______.' Include"\
-                                "one or a handful of topics. For example,"\
-                                "a course about configuring VMware"\
-                                "vSphere 6 should include tags"\
-                                "for vmware-vsphere and virtualization."\
-                                "Try to be as specific and comprehensive as"\
-                                "possible when tagging this course."}}
-        = f.label "Tools"
-        = f.input :tools_tags,
-          collection: @tools,
-          label: false,
-          input_html: { class: "chosen-select u-full-width",
-                        multiple: true,
-                        placeholder: "A comma-separated list of tools",
-                        data: { ot: "Tools tags identify the tools and technology "\
-                                    "used in the course. Use as many of these as "\
-                                    "necessary to be comprehensive. Please use "\
-                                    "generic tool tags (examples: windows-server, "\
-                                    "photoshop, visual-studio) as well as the specific version"\
-                                    " used in the course (examples: windows-server-2012, "\
-                                    "windows-server-2012-r2, photoshop-cc-2015, "\
-                                    "visual-studio-2015)."}}
-        = f.label "Certification(s)"
-        = f.input :certification_tags,
-          collection: @certifications,    
-          label: false,
-          placeholder: "A comma-separated list of certification details (if relevant)",
-          input_html: { multiple: true,   
-                        class: "chosen-select u-full-width",                                   
-                        data: { ot: "If the course prepares the viewer for a "\
-                                    "certification exam, Please use the tags for: "\
-                                    "exam number, exam name, certification"\
-                                    "vendor (microsoft, comptia)."}}                      
-        = f.label "Additional Keywords"
-        = f.input :topics_tags, 
-          label: false,
-          input_html: { placeholder: "A comma-separated list",
-                        class: "u-full-width",
-                        data: { ot: "Provide any additional keywords relevant to"\
-                                    "your course, such as the subject of your example "\
-                                    "scenario(s)."}}
-      div.six.columns
+        div.tags_input_container
+          p.pseudo_label
+            | Audience
+            = link_to help_image "This tag answers the question, "\
+                                 "'Who is this course designed for?' "\
+                                 "Pick the tag that best describes the course's "\
+                                 "target audience."
+          = f.input :audience_tags,
+            label: false,
+            collection: [ 'architecture-construction',
+                          'business-professional',
+                          'creative-professional',
+                          'data-professional',
+                          'it-ops',
+                          'manufacturing-design',
+                          'software-development' ],
+            selected: "creative-professional",
+            input_html: { class: "u-full-width"}
+        div.tags_input_container
+          p.pseudo_label
+            | Topics
+            = link_to help_image "Complete the sentence, 'This course is "\
+                                 "about ______.' Include one or a handful of "\
+                                 "topics. For example, a course about configuring "\
+                                 "VMware vSphere 6 should include tags for "\
+                                 "vmware-vsphere and virtualization. Try to "\
+                                 "be as specific and comprehensive as "\
+                                 "possible when tagging this course."
+          = f.input :topics_list, 
+            collection: @topics, 
+            label: false,
+            input_html: { placeholder: "A comma-separated list of topics",
+                          class: "chosen-select u-full-width",
+                          multiple: true, data: {placeholder: "Select topics tags"}}
+        
+        div.tags_input_container        
+          p.pseudo_label
+            | Tools
+            = link_to help_image "Tools tags identify the tools and technology"\ 
+                                 "used in the course. Use as many of these as "\
+                                 "necessary to be comprehensive. Please use "\
+                                 "generic tool tags (examples: windows-server, "\
+                                 "photoshop, visual-studio) as well as the specific version "\
+                                 "used in the course (examples: windows-server-2012, "\
+                                 "windows-server-2012-r2, photoshop-cc-2015, "\
+                                 "visual-studio-2015)."
+          = f.input :tools_tags,
+            collection: @tools,
+            label: false,
+            input_html: { class: "chosen-select u-full-width",
+                          multiple: true,
+                          data: {placeholder: "Select tools tags"}}
+                          
+        div.tags_input_container        
+          p.pseudo_label
+          | Certification(s)
+          = link_to help_image "If the course prepares the viewer for a "\
+                               "certification exam, Please use the tags for: "\
+                               "exam number, exam name, certification "\
+                               "vendor (microsoft, comptia)."
+          = f.input :certification_tags,
+            collection: @certifications,    
+            label: false,
+            placeholder: "A comma-separated list of certification details (if relevant)",
+            input_html: { multiple: true,   
+                          class: "chosen-select u-full-width",                                   
+                          data: {placeholder: "Select certification tags"}}   
+        
+        div.tags_input_container                               
+          p.pseudo_label 
+            | Additional Keywords
+            = link_to help_image "Provide any additional keywords relevant "\
+                                 "to your course, such as the subject of "\
+                                 "your example scenario(s)."
+          = f.input :topics_tags, 
+            label: false,
+            input_html: { placeholder: "Add topics as a comma-separated list",
+                          class: "u-full-width" }
+                        
+      div.five.columns
         div.u-full-width id="suggestion_container"    
           = f.simple_fields_for :suggested_tags do |ff|
               div.suggested_input
-                button type="button" id="close_button" class="pull-left" x
+                button type="button" class="pull-left close_button" x
                 = ff.input_field :name, class: "pull-left name_input", placeholder: "name"
                 = ff.input_field :tag_type,
                   collection: ["tool", "certification", "topic"], 
-                  class: "pull-left tag_type_input"
+                  class: "pull-left tag_type_input",
+                  selected: "tool"
                 = ff.input_field :description, placeholder: "description", class: "description_input"
  
           button.button-primary id="suggest_button" type="button" suggest a tag                   

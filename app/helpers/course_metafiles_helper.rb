@@ -1,10 +1,12 @@
 module CourseMetafilesHelper
 
-  def help_image_link
-    link_to image_tag("help.svg", size: "19"),
-      "https://authors.pluralsight.com/writing-course-descriptions/",
-      target: 'blank',
-      data: { ot: "Click here for more information about writing course descriptions"},
-      width: "18px", height: "18px"
+  def help_image(input_text)
+    (image_tag "help.svg", size: "19",
+      data: { ot: input_text},
+      width: "16px", height: "16px", class: "help_image").html_safe
+  end
+
+  def course_descriptions_link
+    "https://authors.pluralsight.com/writing-course-descriptions/"
   end
 end

@@ -4,10 +4,10 @@ div id="form_container"
   h1.row Enter Course Info Here
   = simple_form_for @metafile, html: {class: '' } do |f| 
     div.row
-      div.five.columns
+      div.four.columns
         = f.label "Author"
         = f.input :author, 
-                  input_html: {class: "u-full-width six columns", id: "author"}, 
+                  input_html: {class: "u-full-width", id: "author"}, 
                   label: false
     div.row
       div.six.columns
@@ -28,42 +28,33 @@ div id="form_container"
 
     div.row
       div.six.columns
-        - link = link_to image_tag("help.svg", size: "19"), 
-          "https://authors.pluralsight.com/writing-course-descriptions/",
-          target: 'blank',
-          data: { ot: "Click here for more information about writing course descriptions"},
-          width: "19px", height: "19px"
-        = f.label "Short Description #{link.html_safe}"
-
+        p.pseudo_label.u-full-width id="short_description_label"
+          | Short Description
+          = help_image_link.html_safe
         = f.input :short_description,
                   as: :text,
                   input_html: {class: "u-full-width"},
                   label: false
 
       div.six.columns
-        = f.label "Description"
+        p.pseudo_label.u-full-width id="long_description_label"
+          | Description
+          = help_image_link.html_safe
+
         = f.input :description, 
                   as: :text,
                   input_html: { id: 'course_desc_tip',
                                 class: "u-full-width"},
                   label: false
-                              
-                  
-    div.course_link.row
-      div.six.columns
-        = link_to 'Click here for more information about writing course descriptions',
-          'https://authors.pluralsight.com/writing-course-descriptions/', 
-        target: 'blank'
-      br
-      br
+
     div.row
       div.four.columns
         = f.label "Required Software"
         = f.input :software_required, label: false,
-                  input_html: { data: { ot: "Please list the software required to"\
+                  input_html: { data: { ot: "Please list the software required to "\
                                             "follow along with the demos in this course,"\
-                                            "including the latest revision numbers"\
-                                            "(e.g. maya-2015, photoshop-cc-2015)." },
+                                            " including the latest revision numbers"\
+                                            " (e.g. maya-2015, photoshop-cc-2015)." },
                                 class: 'u-full-width'}
       div.two.columns
         = f.label "Module Count"
@@ -74,7 +65,7 @@ div id="form_container"
                                 value: "1" },
                   data: { ot: "NOT including the course preview." }
     div.row
-      div.six.columns
+      div.twelve.columns
         p 
           |
             In the following section, please provide faceted tags to help 
@@ -105,9 +96,8 @@ div id="form_container"
                                     "'Who is this course designed for?'"\
                                     "Pick the tag that best describes"\
                                     "the course's target audience.",
-                                placeholder: "Choose an Audience" }}
-    div.row
-      div.six.columns
+                                placeholder: "Choose an Audience" },
+                        class: "u-full-width"}
         = f.label "Topics"
         = f.input :topics_list, 
           collection: @topics, 
@@ -123,15 +113,11 @@ div id="form_container"
                                 "for vmware-vsphere and virtualization."\
                                 "Try to be as specific and comprehensive as"\
                                 "possible when tagging this course."}}
-    div.row
-      div.six.columns
         = f.label "Tools"
         = f.input :tools_tags,
           collection: @tools,
           label: false,
-          input_html: { rows: 5,
-                        cols: 20,
-                        class: "chosen-select u-full-width",
+          input_html: { class: "chosen-select u-full-width",
                         multiple: true,
                         placeholder: "A comma-separated list of tools",
                         data: { ot: "Tools tags identify the tools and technology "\
@@ -142,24 +128,17 @@ div id="form_container"
                                     " used in the course (examples: windows-server-2012, "\
                                     "windows-server-2012-r2, photoshop-cc-2015, "\
                                     "visual-studio-2015)."}}
-
-    div.row
-      div.six.columns
         = f.label "Certification(s)"
         = f.input :certification_tags,
           collection: @certifications,    
           label: false,
           placeholder: "A comma-separated list of certification details (if relevant)",
-          input_html: { rows: 5,
-                        cols: 20,
-                        multiple: true,   
+          input_html: { multiple: true,   
                         class: "chosen-select u-full-width",                                   
                         data: { ot: "If the course prepares the viewer for a "\
                                     "certification exam, Please use the tags for: "\
                                     "exam number, exam name, certification"\
                                     "vendor (microsoft, comptia)."}}                      
-    div.row
-      div.six.columns
         = f.label "Additional Keywords"
         = f.input :topics_tags, 
           label: false,
@@ -168,12 +147,17 @@ div id="form_container"
                         data: { ot: "Provide any additional keywords relevant to"\
                                     "your course, such as the subject of your example "\
                                     "scenario(s)."}}
-    div id="suggestion_container"    
-      = f.simple_fields_for :suggested_tags do |ff|
-          div.suggested_input
-            p id="close_button" x
-            = ff.input :name  
-            = ff.input :description 
-            = ff.input :tag_type, collection: ["tool", "certification", "topic"]  
-      p id="suggest_button" suggest a tag                        
-    = f.button :submit
+      div.six.columns
+        div.u-full-width id="suggestion_container"    
+          = f.simple_fields_for :suggested_tags do |ff|
+              div.suggested_input
+                button type="button" class="pull-left close_button" x
+                = ff.input_field :name, class: "pull-left name_input", placeholder: "name"
+                = ff.input_field :tag_type,
+                  collection: ["tool", "certification", "topic"], 
+                  class: "pull-left tag_type_input",
+                  selected: "tool"
+                = ff.input_field :description, placeholder: "description", class: "description_input"
+ 
+          button.button-primary id="suggest_button" type="button" suggest a tag                   
+    = f.button :submit, class: 'button-primary'

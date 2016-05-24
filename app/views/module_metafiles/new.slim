@@ -1,0 +1,54 @@
+div.row
+  = link_to "Go Back", '/', {id: "back_button"} 
+
+div.row
+  h1.row Enter Module Info
+
+div.offset-by-three.columns id="form_container"
+  = simple_form_for @metafile, defaults: {required: false} do |f|
+    div.row
+      div.six.columns
+        = f.input :course_title, 
+          label: "Course Title", 
+          input_html: {id: "courseTitle", class: "u-full-width"}
+    div.row          
+      div.six.columns   
+        p.pseudo_label 
+          | Course ID
+          = help_image "Your Course ID is on your Statement of Work. "\
+                       "It is the simplified, lowercase, and dash-separated "\
+                       "version of your course title that you have been "\
+                       "using to name your video clips."
+        
+        = f.input :course_id, 
+          label: false, 
+          input_html: { id: "courseID",
+            placeholder: "sample-course-id",
+            class: "required u-full-width"}
+    div.row
+      div.three.columns
+        = f.input :author, input_html: {id: "author", class: "u-full-width"}  
+      div.three.columns
+        = f.input :module_number, 
+          input_html: { id: "moduleNumber", 
+                        min: "1", value: "1",
+                        class: "u-full-width" } 
+    div.row  
+      div.six.columns
+        = f.input :title, label: "Module Title", input_html: {class: "u-full-width"}
+    div.row  
+      div.six.columns
+        = f.input :description, 
+          as: :text, 
+          input_html: {class: "u-full-width"} 
+    div.row
+      p id="clips_title" Clip Titles (empty fields will be ommitted in the meta file) 
+    = f.simple_fields_for :clips do |c| 
+      div.row
+        div.clip_container.six.columns
+          = c.input :title, 
+            label: false, 
+            placeholder: "#{c.index + 1}",
+            input_html: {class: "clip_title u-full-width"} 
+          = c.input :href,  as: :hidden, input_html: {class: "clip_href"} 
+    = f.button :submit 

@@ -1,5 +1,5 @@
 class ModuleMetafile < ActiveRecord::Base
-  has_many :clips, dependent :destroy
+  has_many :clips, dependent: :destroy
 
   accepts_nested_attributes_for :clips
 

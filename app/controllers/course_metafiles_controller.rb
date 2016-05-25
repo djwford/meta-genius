@@ -35,7 +35,7 @@ class CourseMetafilesController < ApplicationController
     puts metafile.inspect
     begin
       allTags = [metafile.audience_tags] + metafile.tools_tags + metafile.certification_tags
-      metafile.topics_tags.split(',').each {|y| allTags << y }
+      metafile.topics_tags.split(',').each {|y| allTags << y.strip }
       allTags.uniq!
 
       builder = Nokogiri::XML::Builder.new do |xml|

@@ -6,25 +6,25 @@ div id="form_container"
   = simple_form_for @metafile do |f| 
     div.row
       div.three.columns
-        p.pseudo_label Author
+        p.pseudo_label.required_label Author
         = f.input :author, 
-                  input_html: {class: "u-full-width", id: "author"}, 
+                  input_html: {class: "u-full-width required", id: "author"}, 
                   label: false
                   
       div.three.columns
-        p.pseudo_label Module Count
+        p.pseudo_label.required_label Module Count
         = f.input :module_count,
                   label: false,
                   input_html: { id: "moduleCount",
                                 min: "1",
                                 value: "1", class: "u-full-width" }                  
       div.six.columns
-        p.pseudo_label Course Title
+        p.pseudo_label.required_label Course Title
         = f.input :title, label: false,
-                  input_html: {id: "courseTitle", class: "u-full-width"}
+                  input_html: {id: "courseTitle", class: "u-full-width required"}
     div.row
       div.six.columns
-        p.pseudo_label id="short_description_label"
+        p.pseudo_label.required_label id="short_description_label"
           | Course ID
           = help_image "Your Course ID is on your Statement of Work."\
                        " It is the simplified, lowercase, and dash-separated "\
@@ -33,12 +33,13 @@ div id="form_container"
         = f.input :course_id,
           label: false,
           input_html: { id: "courseID",
-                        class:  "u-full-width",
+                        class:  "u-full-width required",
                         placeholder: "sample-course-id"} 
       div.six.columns
         p.pseudo_label.u-full-width
           | Required Software 
-          = help_image "Please list the software required to "\
+          = help_image "For Creative, Design, and Engineering courses in particular, "\
+                       " please list the software required to "\
                        "follow along with the demos in this course,"\
                        " including the latest revision numbers"\
                        " (e.g. maya-2015, photoshop-cc-2015)."
@@ -47,18 +48,18 @@ div id="form_container"
     
     div.row
       div.six.columns
-        p.pseudo_label.u-full-width id="short_description_label"
+        p.pseudo_label.u-full-width.required_label id="short_description_label"
           | Short Description
           = link_to (help_image 'Click here for more information about writing course descriptions.'), 
             course_descriptions_link,
             target: "blank"
         = f.input :short_description,
                   as: :text,
-                  input_html: {class: "u-full-width"},
+                  input_html: {class: "u-full-width required"},
                   label: false
 
       div.six.columns
-        p.pseudo_label.u-full-width id="long_description_label"
+        p.pseudo_label.u-full-width.required_label id="long_description_label"
           | Description
           = link_to (help_image 'Click here for more information about writing course descriptions.'), 
             course_descriptions_link,
@@ -66,7 +67,7 @@ div id="form_container"
         = f.input :description, 
                   as: :text,
                   input_html: { id: 'course_desc_tip',
-                                class: "u-full-width"},
+                                class: "u-full-width required"},
                   label: false
 
     div.row id="tags_master_container"
@@ -77,8 +78,8 @@ div id="form_container"
           users find your course through the browse/filter experience.  
           For the sake of limiting the number of tags in the browse experience, 
           please use tags that currently exist in the system. If you don't 
-          see a tag on the following list that you feel is necessary to add to 
-          your course, you can suggest we add it by clicking 'Suggest a Tag', then 
+          see a tag in the following lists that you feel is necessary for 
+          your course, you can suggest we add it by clicking 'Suggest a Tag';  
           add the tag name, facet (tool, topic, or certification), and a short 
           description of the tag. Click 
         = link_to 'here', 
@@ -88,7 +89,7 @@ div id="form_container"
       
       div.six.columns
         div.tags_input_container
-          p.pseudo_label
+          p.pseudo_label.required_label
             | Audience
             = help_image "This tag answers the question, "\
                          "'Who is this course designed for?' "\
@@ -104,9 +105,9 @@ div id="form_container"
                           'manufacturing-design',
                           'software-development' ],
             selected: "creative-professional",
-            input_html: { class: "u-full-width"}
+            input_html: { class: "u-full-width required"}
         div.tags_input_container
-          p.pseudo_label
+          p.pseudo_label.required_label
             | Topics
             = help_image "Complete the sentence, 'This course is "\
                          "about ______.' Include one or a handful of "\
@@ -118,12 +119,11 @@ div id="form_container"
           = f.input :topics_list, 
             collection: @topics, 
             label: false,
-            input_html: { placeholder: "A comma-separated list of topics",
-                          class: "chosen-select u-full-width",
+            input_html: { class: "chosen-select u-full-width required",
                           multiple: true, data: {placeholder: "Select topics tags"}}
         
         div.tags_input_container        
-          p.pseudo_label
+          p.pseudo_label.required_label
             | Tools
             = help_image "Tools tags identify the tools and technology"\ 
                          "used in the course. Use as many of these as "\
@@ -136,7 +136,7 @@ div id="form_container"
           = f.input :tools_tags,
             collection: @tools,
             label: false,
-            input_html: { class: "chosen-select u-full-width",
+            input_html: { class: "chosen-select u-full-width required",
                           multiple: true,
                           data: {placeholder: "Select tools tags"}}
                           

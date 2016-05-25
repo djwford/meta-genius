@@ -4,4 +4,5 @@ class CourseMetafile < ActiveRecord::Base
   serialize :certification_tags
   serialize :tools_tags
   serialize :topics_tags
+  serialize :topics_list
 end

@@ -8,12 +8,13 @@ div.offset-by-three.columns id="form_container"
   = simple_form_for @metafile, defaults: {required: false} do |f|
     div.row
       div.six.columns
+        p.pseudo_label.required_label Course Title
         = f.input :course_title, 
-          label: "Course Title", 
-          input_html: {id: "courseTitle", class: "u-full-width"}
+          label: false, 
+          input_html: {id: "courseTitle", class: "u-full-width required"}
     div.row          
       div.six.columns   
-        p.pseudo_label 
+        p.pseudo_label.required_label
           | Course ID
           = help_image "Your Course ID is on your Statement of Work. "\
                        "It is the simplified, lowercase, and dash-separated "\
@@ -27,22 +28,36 @@ div.offset-by-three.columns id="form_container"
             class: "required u-full-width"}
     div.row
       div.three.columns
-        = f.input :author, input_html: {id: "author", class: "u-full-width"}  
+        p.pseudo_label.required_label Author Name
+        = f.input :author, 
+          label: false,
+          input_html: {id: "author", class: "u-full-width required"}  
       div.three.columns
+        p.pseudo_label.required_label Module Number
         = f.input :module_number, 
+          label: false,
           input_html: { id: "moduleNumber", 
                         min: "1", value: "1",
-                        class: "u-full-width" } 
+                        class: "u-full-width required" } 
     div.row  
       div.six.columns
-        = f.input :title, label: "Module Title", input_html: {class: "u-full-width"}
+        p.pseudo_label.required_label Module Title
+        = f.input :title, 
+          label: false, 
+          input_html: {class: "u-full-width required"}
+          
     div.row  
       div.six.columns
+        p.pseudo_label.required_label Description
         = f.input :description, 
+          label: false,
           as: :text, 
-          input_html: {class: "u-full-width"} 
+          input_html: {class: "u-full-width required"} 
+          
     div.row
-      p id="clips_title" Clip Titles (empty fields will be ommitted in the meta file) 
+      p id="clips_title" 
+        span.required_label Clip Titles 
+        | (empty fields will be ommitted in the meta file) 
     = f.simple_fields_for :clips do |c| 
       div.row
         div.clip_container.six.columns

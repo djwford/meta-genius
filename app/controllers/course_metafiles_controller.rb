@@ -51,7 +51,7 @@ class CourseMetafilesController < ApplicationController
             end
           }
         # topics
-        if(metafile.topics_tags and !(metafile.topics_tags.empty?))
+        if(metafile.topics_tags.length > 1)
           xml.topics{
             metafile.topics_tags.split(',').each do |topic|
               xml.topic topic.strip.downcase.gsub(/\s/,"-")
@@ -59,7 +59,7 @@ class CourseMetafilesController < ApplicationController
           }
         else
           xml.topics{
-            xml.topic nil
+            xml.topic "_"
           }
         end
         xml.category " "
@@ -71,7 +71,7 @@ class CourseMetafilesController < ApplicationController
           }
         else
           xml.tags{
-            xml.tag nil
+            xml.tag "_"
           }
         end
          # audience tags
@@ -81,12 +81,11 @@ class CourseMetafilesController < ApplicationController
           }
         else
           xml.audienceTags{
-            xml.audienceTag nil
+            xml.audienceTag "_"
           }
         end
         # tools tags
-
-        if(metafile.tools_tags)
+        if(metafile.tools_tags.length > 1)
           xml.toolsTags{
             metafile.tools_tags.each do |tool|
               unless tool.blank?
@@ -96,12 +95,12 @@ class CourseMetafilesController < ApplicationController
           }
         else
           xml.toolsTags{
-            xml.toolsTag nil
+            xml.toolsTag "_"
           }
         end
-
-        if(metafile.topics_list)
-          topics = JSON::parse(metafile.topics_list).reject {|x| x.empty?}
+        if(metafile.topics_list.length > 1)
+          puts "yup!\n"
+          topics = metafile.topics_list.reject {|x| x.empty?}
           xml.topicTags{
              topics.each do |x|
                xml.topicTag x.strip
@@ -109,11 +108,11 @@ class CourseMetafilesController < ApplicationController
            }
         else
            xml.topicTags{
-            xml.topicTag nil
+            xml.topicTag "_"
            }
         end
           # cert tags
-        if(metafile.certification_tags)
+        if(metafile.certification_tags.length > 1)
           xml.certificationsTags{
             metafile.certification_tags.each do |tag|
               unless tag.blank?
@@ -123,7 +122,7 @@ class CourseMetafilesController < ApplicationController
           }
         else
           xml.certificationsTags{
-            xml.certificationsTag nil
+            xml.certificationsTag "_"
           }
         end
         # process suggested_tags, add as notes

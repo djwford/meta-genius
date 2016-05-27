@@ -15,6 +15,7 @@ gem 'compass-rails'
 gem 'chosen-rails'
 gem "slim-rails"
 gem "rails_12factor"
+gem 'lograge'
 
 group :development, :test do
   gem 'byebug'

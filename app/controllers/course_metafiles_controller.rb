@@ -35,7 +35,7 @@ class CourseMetafilesController < ApplicationController
     puts metafile.inspect
     begin
       allTags = [metafile.audience_tags] + metafile.tools_tags + metafile.certification_tags
-      metafile.topics_tags.split(',').each {|y| allTags << y.strip }
+      metafile.topics_tags.gsub("\n", ",").split(',').each {|y| allTags << y.strip}
       allTags.uniq!
 
       builder = Nokogiri::XML::Builder.new do |xml|
@@ -53,7 +53,7 @@ class CourseMetafilesController < ApplicationController
         # topics
         if(metafile.topics_tags.length > 1)
           xml.topics{
-            metafile.topics_tags.split(',').each do |topic|
+            metafile.topics_tags.gsub("\n", ",").split(',').each do |topic|
               xml.topic topic.strip.downcase.gsub(/\s/,"-")
             end
           }
@@ -62,7 +62,7 @@ class CourseMetafilesController < ApplicationController
             xml.topic "_"
           }
         end
-        xml.category " "
+        xml.category "_"
         if(allTags and !(allTags.empty?))
           xml.tags{
             allTags.each do |target|
@@ -99,7 +99,6 @@ class CourseMetafilesController < ApplicationController
           }
         end
         if(metafile.topics_list.length > 1)
-          puts "yup!\n"
           topics = metafile.topics_list.reject {|x| x.empty?}
           xml.topicTags{
              topics.each do |x|

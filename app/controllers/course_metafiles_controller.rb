@@ -136,7 +136,7 @@ class CourseMetafilesController < ApplicationController
     logger.tagged("course_metafile_fatal") { logger.debug "Failed to create_xml for course meta. Params: #{metafile}. Error: #{error.inspect}, #{error.backtrace}" }
     end
     # create the file
-    fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
+    fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").gsub(/\//,"").gsub(/\\/,"").downcase}.meta"
     # make the folder
     system 'mkdir', '-p', ENV['METAFILE_PATH']
     full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)

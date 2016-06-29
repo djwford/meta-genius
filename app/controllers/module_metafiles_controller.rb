@@ -42,7 +42,7 @@ class ModuleMetafilesController < ApplicationController
           completeClips.push clip
         end
       end
-      builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
         xml.module('xmlns' => "http://pluralsight.com/sapphire/module/2007/11") {
           xml.author metafile.author.strip.gsub(/\s/, "-").downcase
           xml.title metafile.title.strip

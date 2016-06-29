@@ -38,7 +38,7 @@ class CourseMetafilesController < ApplicationController
       metafile.topics_tags.gsub("\n", ",").split(',').each {|y| allTags << y.strip}
       allTags.uniq!
 
-      builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
         xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
           xml.comment metafile.software_required
           xml.title metafile.title

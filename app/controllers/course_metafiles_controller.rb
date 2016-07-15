@@ -12,8 +12,6 @@ class CourseMetafilesController < ApplicationController
 
   def create
     @metafile = CourseMetafile.new(course_metafile_params)
-
-    puts "tools tags! \n"
     puts course_metafile_params.inspect
     @metafile.topics_list = params['course_metafile']['topics_list']
     @metafile.tools_tags = params['course_metafile']['tools_tags']
@@ -35,26 +33,26 @@ class CourseMetafilesController < ApplicationController
     puts metafile.inspect
     begin
       allTags = [metafile.audience_tags] + metafile.tools_tags + metafile.certification_tags
-      metafile.topics_tags.gsub("\n", ",").split(',').each {|y| allTags << y.strip}
+      metafile.topics_tags.gsub("\n", ",").split(',').each {|y| allTags << y.sanitize_input}
       allTags.uniq!
 
-      builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
+      builder = Nokogiri::XML::Builder.new do |xml|
         xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
-          xml.comment metafile.software_required
-          xml.title metafile.title
-          xml.shortDescription metafile.short_description
-          xml.description metafile.description
+          xml.comment metafile.software_required.sanitize_input
+          xml.title metafile.title.sanitize_input
+          xml.shortDescription metafile.short_description.sanitize_input
+          xml.description metafile.description.sanitize_input
           xml.modules {
             metafile.module_count.times do |x|
-              xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase),
-                :name => "#{metafile.course_id.strip.gsub(/\s/, "-").downcase}-m#{(x + 1)}")
+              xml.module(:author => (metafile.author.gsub(/\s/, "-").downcase.sanitize_input),
+                :name => "#{metafile.course_id.gsub(/\s/, "-").downcase.sanitize_input}-m#{(x + 1)}")
             end
           }
         # topics
         if(metafile.topics_tags.length > 1)
           xml.topics{
             metafile.topics_tags.gsub("\n", ",").split(',').each do |topic|
-              xml.topic topic.strip.downcase.gsub(/\s/,"-")
+              xml.topic topic..sanitize_input.downcase.gsub(/\s/,"-")
             end
           }
         else
@@ -66,7 +64,7 @@ class CourseMetafilesController < ApplicationController
         if(allTags and !(allTags.empty?))
           xml.tags{
             allTags.each do |target|
-              unless target.blank? then xml.tag target end
+              unless target.blank? then xml.tag target.sanitize_input end
             end
           }
         else
@@ -89,7 +87,7 @@ class CourseMetafilesController < ApplicationController
           xml.toolsTags{
             metafile.tools_tags.each do |tool|
               unless tool.blank?
-                xml.toolsTag tool.strip.downcase.gsub(/\s/,"-")
+                xml.toolsTag tool.sanitize_input.downcase.gsub(/\s/,"-")
               end
             end
           }
@@ -102,7 +100,7 @@ class CourseMetafilesController < ApplicationController
           topics = metafile.topics_list.reject {|x| x.empty?}
           xml.topicTags{
              topics.each do |x|
-               xml.topicTag x.strip
+               xml.topicTag x.sanitize_input
              end
            }
         else
@@ -127,7 +125,7 @@ class CourseMetafilesController < ApplicationController
         # process suggested_tags, add as notes
         if metafile.suggested_tags
           metafile.suggested_tags.each do |tag|
-            xml.comment "suggested #{tag.tag_type}: '#{tag.name}' | \"#{tag.description}\""
+            xml.comment "suggested #{tag.tag_type}: '#{tag.name.sanitize_input}' | \"#{tag.description.sanitize_input}\""
           end
         end
       }
@@ -136,7 +134,7 @@ class CourseMetafilesController < ApplicationController
     logger.tagged("course_metafile_fatal") { logger.debug "Failed to create_xml for course meta. Params: #{metafile}. Error: #{error.inspect}, #{error.backtrace}" }
     end
     # create the file
-    fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").gsub(/\//,"").gsub(/\\/,"").downcase}.meta"
+    fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
     # make the folder
     system 'mkdir', '-p', ENV['METAFILE_PATH']
     full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)
@@ -152,6 +150,8 @@ class CourseMetafilesController < ApplicationController
     end
     return full_meta_path
   end
+
+
 
   private
   def course_metafile_params

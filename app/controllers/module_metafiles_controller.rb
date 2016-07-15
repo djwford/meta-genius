@@ -42,14 +42,14 @@ class ModuleMetafilesController < ApplicationController
           completeClips.push clip
         end
       end
-      builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
+      builder = Nokogiri::XML::Builder.new do |xml|
         xml.module('xmlns' => "http://pluralsight.com/sapphire/module/2007/11") {
-          xml.author metafile.author.strip.gsub(/\s/, "-").downcase
-          xml.title metafile.title.strip
-          xml.description metafile.description
+          xml.author metafile.author.gsub(/\s/, "-").downcase.sanitize_input
+          xml.title metafile.title.sanitize_input
+          xml.description metafile.description.sanitize_input
           xml.clips {
             completeClips.each do | clipObject |
-              xml.clip(:href => clipObject.href, :title => clipObject.title)
+              xml.clip(:href => clipObject.href, :title => clipObject.title.sanitize_input)
             end
             }
         }
@@ -59,7 +59,7 @@ class ModuleMetafilesController < ApplicationController
     end
     # create the file
     begin
-      courseTitle = metafile.course_id.strip.gsub("\s","-").gsub(/\//,"").gsub(/\\/,"").downcase
+      courseTitle = metafile.course_id.strip.gsub("\s","-").downcase
       fileName = "#{courseTitle}-m#{metafile.module_number}"
       system 'mkdir', '-p', ENV['METAFILE_PATH']
       puts "filename: #{fileName}"
@@ -78,5 +78,3 @@ logger.tagged("module_metafile_fatal") {logger.debug "failed while saving XML.  
     params.require(:module_metafile).permit(:title, :course_title, :author, :module_number, :description, :course_id, clips_attributes: [:href, :title])
   end
 end
-
-

@@ -37,7 +37,7 @@ $(document).ready(function(){
     $("#module_metafile_description").val((currentDescription).replace(/\n/g," "));
   });
   // when the course title is changed, set all HREF inputs
-  $("#courseTitle").blur(function(){
+  $("#courseID").blur(function(){
     setHREF();
   });
   $("#moduleNumber").blur(function(){
@@ -52,6 +52,3 @@ $(document).ready(function(){
     $(this).css({"background-color": "#FFFFFF"})
   });
 });
-
-
-

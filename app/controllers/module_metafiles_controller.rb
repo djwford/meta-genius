@@ -49,9 +49,11 @@ class ModuleMetafilesController < ApplicationController
           xml.description metafile.description.sanitize_input
           xml.clips {
             completeClips.each do | clipObject |
-              xml.clip(:href => clipObject.href, :title => clipObject.title.sanitize_input)
+              sanitized_href = clipObject.href.sanitize_input
+              sanitized_title = clipObject.title.sanitize_input
+              xml.clip(href: sanitized_href, title: sanitized_title)
             end
-            }
+          }
         }
       end
     rescue => error

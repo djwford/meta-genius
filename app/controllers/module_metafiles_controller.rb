@@ -42,7 +42,7 @@ class ModuleMetafilesController < ApplicationController
           completeClips.push clip
         end
       end
-      builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
         xml.module('xmlns' => "http://pluralsight.com/sapphire/module/2007/11") {
           xml.author metafile.author.gsub(/\s/, "-").downcase.sanitize_input
           xml.title metafile.title.sanitize_input
@@ -59,8 +59,9 @@ class ModuleMetafilesController < ApplicationController
     end
     # create the file
     begin
-      courseTitle = metafile.course_id.strip.gsub("\s","-").downcase
+      courseTitle = metafile.course_id.strip.gsub("\s","-").gsub(/\//,"").gsub(/\\/,"").downcase
       fileName = "#{courseTitle}-m#{metafile.module_number}"
+
       system 'mkdir', '-p', ENV['METAFILE_PATH']
       puts "filename: #{fileName}"
       x = File.new("#{ENV["METAFILE_PATH"]}/#{fileName}.meta", "w")

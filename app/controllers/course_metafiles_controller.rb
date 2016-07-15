@@ -36,7 +36,7 @@ class CourseMetafilesController < ApplicationController
       metafile.topics_tags.gsub("\n", ",").split(',').each {|y| allTags << y.sanitize_input}
       allTags.uniq!
 
-      builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
         xml.course('xmlns' => "http://pluralsight.com/sapphire/course/2007/11") {
           xml.comment metafile.software_required.sanitize_input
           xml.title metafile.title.sanitize_input
@@ -134,7 +134,7 @@ class CourseMetafilesController < ApplicationController
     logger.tagged("course_metafile_fatal") { logger.debug "Failed to create_xml for course meta. Params: #{metafile}. Error: #{error.inspect}, #{error.backtrace}" }
     end
     # create the file
-    fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").downcase}.meta"
+    fileName = "#{metafile.course_id.strip.gsub(/\s/,"-").gsub(/\//,"").gsub(/\\/,"").downcase}.meta"
     # make the folder
     system 'mkdir', '-p', ENV['METAFILE_PATH']
     full_meta_path = (ENV['METAFILE_PATH'] + "/" + fileName)

@@ -52,7 +52,7 @@ class CourseMetafilesController < ApplicationController
         if(metafile.topics_tags.length > 1)
           xml.topics{
             metafile.topics_tags.gsub("\n", ",").split(',').each do |topic|
-              xml.topic topic..sanitize_input.downcase.gsub(/\s/,"-")
+              xml.topic topic.sanitize_input.downcase.gsub(/\s/,"-")
             end
           }
         else

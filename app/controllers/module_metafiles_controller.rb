@@ -62,7 +62,7 @@ class ModuleMetafilesController < ApplicationController
     # create the file
     begin
       courseTitle = metafile.course_id.strip.gsub("\s","-").gsub(/\//,"").gsub(/\\/,"").downcase
-      fileName = "#{courseTitle}-m#{metafile.module_number}"
+      fileName = "#{courseTitle}-m#{metafile.module_number}-#{Time.now.to_i}"
 
       system 'mkdir', '-p', ENV['METAFILE_PATH']
       puts "filename: #{fileName}"

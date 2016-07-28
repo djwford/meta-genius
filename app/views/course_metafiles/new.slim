@@ -6,10 +6,11 @@ div id="form_container"
   = simple_form_for @metafile do |f| 
     div.row
       div.three.columns
-        p.pseudo_label.required_label Author
+        p.pseudo_label.required_label Author Name
         = f.input :author, 
                   input_html: {class: "u-full-width required", id: "author"}, 
-                  label: false
+                  label: false,
+                  placeholder: "first and last"
                   
       div.three.columns
         p.pseudo_label.required_label Module Count

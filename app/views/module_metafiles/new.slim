@@ -1,5 +1,5 @@
 div.row
-  = link_to "Go Back", '/', {id: "back_button"} 
+  = link_to "Go Back", '/', {id: "back_button"}
 
 div.row
   h1.row Enter Module Info
@@ -9,61 +9,62 @@ div.offset-by-three.columns id="form_container"
     div.row
       div.six.columns
         p.pseudo_label.required_label Course Title
-        = f.input :course_title, 
-          label: false, 
+        = f.input :course_title,
+          label: false,
           input_html: {id: "courseTitle", class: "u-full-width required"}
-    div.row          
-      div.six.columns   
+    div.row
+      div.six.columns
         p.pseudo_label.required_label
           | Course ID
           = help_image "Your Course ID is on your Statement of Work. "\
                        "It is the simplified, lowercase, and dash-separated "\
                        "version of your course title that you have been "\
                        "using to name your video clips."
-        
-        = f.input :course_id, 
-          label: false, 
+
+        = f.input :course_id,
+          label: false,
           input_html: { id: "courseID",
             placeholder: "sample-course-id",
             class: "required u-full-width"}
     div.row
       div.three.columns
         p.pseudo_label.required_label Author Name
-        = f.input :author, 
+        = f.input :author,
           label: false,
-          input_html: {id: "author", class: "u-full-width required"}  
+          placeholder: "first and last",
+          input_html: {id: "author", class: "u-full-width required"}
       div.three.columns
         p.pseudo_label.required_label Module Number
-        = f.input :module_number, 
+        = f.input :module_number,
           label: false,
-          input_html: { id: "moduleNumber", 
+          input_html: { id: "moduleNumber",
                         min: "1", value: "1",
-                        class: "u-full-width required" } 
-    div.row  
+                        class: "u-full-width required" }
+    div.row
       div.six.columns
         p.pseudo_label.required_label Module Title
-        = f.input :title, 
-          label: false, 
+        = f.input :title,
+          label: false,
           input_html: {class: "u-full-width required"}
-          
-    div.row  
+
+    div.row
       div.six.columns
         p.pseudo_label.required_label Description
-        = f.input :description, 
+        = f.input :description,
           label: false,
-          as: :text, 
-          input_html: {class: "u-full-width required"} 
-          
+          as: :text,
+          input_html: {class: "u-full-width required"}
+
     div.row
-      p id="clips_title" 
-        span.required_label Clip Titles 
-        | (empty fields will be ommitted in the meta file) 
-    = f.simple_fields_for :clips do |c| 
+      p id="clips_title"
+        span.required_label Clip Titles
+        | (empty fields will be ommitted in the meta file)
+    = f.simple_fields_for :clips do |c|
       div.row
         div.clip_container.six.columns
-          = c.input :title, 
-            label: false, 
+          = c.input :title,
+            label: false,
             placeholder: "#{c.index + 1}",
-            input_html: {class: "clip_title u-full-width"} 
-          = c.input :href,  as: :hidden, input_html: {class: "clip_href"} 
+            input_html: {class: "clip_title u-full-width"}
+          = c.input :href,  as: :hidden, input_html: {class: "clip_href"}
     = f.button :submit, class: 'button-primary'

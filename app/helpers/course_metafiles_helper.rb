@@ -6,7 +6,10 @@ module CourseMetafilesHelper
       width: "16px", height: "16px", class: "help_image").html_safe
   end
 
-  def course_descriptions_link
-    "https://authors.pluralsight.com/writing-course-descriptions/"
+  def course_short_descriptions_link
+    "https://authors.pluralsight.com/course-deliverables/short-description/"
+  end
+  def course_long_descriptions_link
+    "https://authors.pluralsight.com/course-deliverables/long-description/"
   end
 end

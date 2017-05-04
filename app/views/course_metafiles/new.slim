@@ -52,7 +52,7 @@ div id="form_container"
         p.pseudo_label.u-full-width.required_label id="short_description_label"
           | Short Description
           = link_to (help_image 'Click here for more information about writing course descriptions.'), 
-            course_descriptions_link,
+            course_short_descriptions_link,
             target: "blank"
         = f.input :short_description,
                   as: :text,
@@ -63,7 +63,7 @@ div id="form_container"
         p.pseudo_label.u-full-width.required_label id="long_description_label"
           | Description
           = link_to (help_image 'Click here for more information about writing course descriptions.'), 
-            course_descriptions_link,
+            course_long_descriptions_link,
             target: "blank"
         = f.input :description, 
                   as: :text,
